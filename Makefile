@@ -2,7 +2,7 @@ TEX=platex
 DVIPDF=dvipdfmx
 MENDEX=mendex
 BIBTEX=pbibtex
-TARGET=jps_cp
+TARGET=omeg15
 
 all: ${TARGET}.pdf
 
