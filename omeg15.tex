@@ -26,6 +26,30 @@
 \maketitle
 
 \section{Introduction}
+荷電粒子の飛跡を３次元的に検出することができる検出器としてTime Projection Chamber (TPC) がある。
+検出器中にガスを従弟んすることで荷電粒子が通過した飛席上に電離が起きる。
+検出面に向かって電子がドリフトするように電場をかけることで、電離した電子を検出面まで移動させる。
+移動してきた電子のドリフト時間を測定することでドリフト方向の位置を決定することができる。
+また、検出面に飛跡を射影した像を決定することができる。
+近年、標的の薄膜を透過することができないほど低エネルギーの荷電粒子の検出に対して、
+検出ガスを標的とするアクティブ標的を使用することでそのような粒子が検出できる。
+しかし、TPC とアクティブ標的を用いた手法は背景事象となるイベントの除去や
+散乱粒子及び反跳粒子の飛跡情報の抽出などが容易ではなく解析に大きな労力を要する。
+
+我々はMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic} で読み出しを行うTPC とアクティブ標的を用いた検出器である
+Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo}を不安定核実験に用いるために開発した。
+近年、大阪大学核物理研究センター (RCNP) において、
+MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測定が初めて行われた。
+MAIKo TPC から得られるデータから背景事象の除去をこれまではHough 変換による飛跡抽出アルゴリズムを用いて行ってきた。
+しかし、この手法にはアルゴリズムに多くのパラメータの最適化とその後の画像識別に多くの時間を必要とする。
+また、識別能も満足のいくものではなかった。
+そこで、我々は近年注目されているニューラルネットワークを用いた画像データの識別を試みた。
+ニューラルネットワークを用いることで、
+離れた点の関係や直線の位置、角度などの従来の解析手法ではまとめて扱うことの難しい
+多くの特徴量を同時に考慮した画像識別が可能になると期待される。
+また、ニューラルネットワークは一度構築するとその後は短時間で画像識別を行うことができる。
+このようなニューラルネットワークの特徴を活かすことで、
+従来のアルゴリズムでは実現が難しかった高い精度と短い識別時間を実現することが可能である。
 
 \section{Conventional analysis method}
 
@@ -34,45 +58,7 @@
 \section{Result}
 
 \section{Conclusion}
-% \section{Another Section}
-% \subsection{Subsection}
-% \subsubsection{Subsubsection}
-% 
-% 
-% \begin{table}[tbh]
-% \caption{Captions to tables and figures should be sentences.}
-% \label{t1}
-% \begin{tabular}{ll}
-% \hline
-% AAA & BBB \\
-% CCC & DDD \\
-% \hline
-% \end{tabular}
-% \end{table}
-% 
-% \subsubsection{Equation numbers}
-% 
-% The \verb|seceq| option resets the equation numbers at the start of each section.
-% 
-% \begin{figure}[tbh]
-% %\includegraphics{fig01.eps}
-% \caption{You can embed figures using the \texttt{\textbackslash includegraphics} command. Basically, figures should appear where they are cited in the text. You do not need to separate figures from the main text when you use \LaTeX\ for preparing your manuscript.}
-% \label{f1}
-% \end{figure}
-% 
-% Label figures, tables, and equations appropriately using the \verb|\label| command, and use the \verb|\ref| command to cite them in the text as ``\verb|as shown in Fig. \ref{f1}|". This automatically labels the numbers in numerical order.
-% 
-% The \verb|minipage| environment can be used to place figures horizontally.
-% 
-% \begin{equation}
-% E = mc^{2}
-% \label{e1}
-% \end{equation}
-% 
-% \appendix
-% \section{}
-% 
-% Use the \verb|\appendix| command if you need an appendix(es). The \verb|\section| command should follow even though there is no title for the appendix (see above in the source of this file).
+
 
 
 \begin{thebibliography}{9}
