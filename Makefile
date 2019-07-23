@@ -19,5 +19,10 @@ ${TARGET}.bbl: ${TARGET}.aux
 	$(TEX) ${TARGET}.tex
 	$(TEX) ${TARGET}.tex
 
+force2:
+	$(TEX) ${TARGET}.tex
+	$(TEX) ${TARGET}.tex
+	$(DVIPDF) ${TARGET}.dvi
+
 clean:
-	rm ${TARGET}.dvi ${TARGET}.log ${TARGET}.ilg ${TARGET}.pdf ${TARGET}.aux
+	rm ${TARGET}.dvi ${TARGET}.log ${TARGET}.pdf ${TARGET}.aux

@@ -1,6 +1,9 @@
 \documentclass{jps-cp}
 \usepackage{txfonts} %Please comment out this line unless the txfonts package is availabe in your LaTeX system.
 \usepackage{url}
+\usepackage{multirow}
+\usepackage{array, booktabs}
+\usepackage{wrapfig}
 
 \title{New analysis method of TPC data using neural network}
 
@@ -26,24 +29,115 @@
 \maketitle
 
 \section{Introduction}
-荷電粒子の飛跡を３次元的に検出することができる検出器としてTime Projection Chamber (TPC) がある。
-検出器中にガスを従弟んすることで荷電粒子が通過した飛席上に電離が起きる。
-検出面に向かって電子がドリフトするように電場をかけることで、電離した電子を検出面まで移動させる。
-移動してきた電子のドリフト時間を測定することでドリフト方向の位置を決定することができる。
-また、検出面に飛跡を射影した像を決定することができる。
-近年、標的の薄膜を透過することができないほど低エネルギーの荷電粒子の検出に対して、
-検出ガスを標的とするアクティブ標的を使用することでそのような粒子が検出できる。
-しかし、TPC とアクティブ標的を用いた手法は背景事象となるイベントの除去や
-散乱粒子及び反跳粒子の飛跡情報の抽出などが容易ではなく解析に大きな労力を要する。
+近年、不安定核を用いた原子核実験において検出ガスを標的として用いるアクティブ標的が多く用いられている。
+また、荷電粒子の飛跡を２次元的に検出することができるTime Projection Chamber (TPC) が多く用いられている。
+TPC は大きな立体角を覆うことができ、多くの物理量を同時に測定することが可能である。
+このアクティブ標的を用いたTPC のデータ解析において、
+背景事象となるデータの選別や飛跡データの物理的情報の抽出には多くの労力が必要となる。
+そこで、我々は近年画像認識において多くの成果を出しているニューラルネットワークを用いることで、
+より効率的な解析を行うことができる解析方法の開発を行った。
+
+\section{What is MAIKo TPC}
+
+\begin{wrapfigure}{r}{20zw}
+  \begin{center}
+    \includegraphics[clip, width=0.4\columnwidth]{eps/at_fig2.eps}
+    \caption{MAIKo TPC の外観。}
+    \label{fig:MAIKo}
+  \end{center}
+\end{wrapfigure}
 
 我々はMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic} で読み出しを行うTPC とアクティブ標的を用いた検出器である
-Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo}を不安定核実験に用いるために開発した。
+Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo} (Fig. \ref{fig:MAIKo}) を
+不安定核実験に用いるために開発した。
+MAIKo TPC の大きさは$102.4 \rm{mm} (\rm{W}) \times 102.4 \rm{mm} (\rm{D}) \times 140.0 \rm{mm} (\rm{H})$である。
+MAIKo TPC では飛跡を３次元情報として取得せず、側面方向とビーム入射方向の２つの平面へ射影した飛跡として得られる。
+それぞれの画像は$256\times 1024$ pixelsで得られる。
+
 近年、大阪大学核物理研究センター (RCNP) において、
 MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測定が初めて行われた。
-MAIKo TPC から得られるデータから背景事象の除去をこれまではHough 変換による飛跡抽出アルゴリズムを用いて行ってきた。
-しかし、この手法にはアルゴリズムに多くのパラメータの最適化とその後の画像識別に多くの時間を必要とする。
-また、識別能も満足のいくものではなかった。
-そこで、我々は近年注目されているニューラルネットワークを用いた画像データの識別を試みた。
+MAIKo TPC からはFig. \ref{fig:true}, \ref{fig:false}に示すような飛跡データが得られる。
+各図ともに左図が側面に射影した飛跡、右図がビーム方向に射影した飛跡を示す。
+MAIKo TPC では標的である${}^{4}\rm{He}$との散乱事象以外にもクエンチガスの$\rm{C}$や$\rm{O}$との散乱も測定される。
+飛跡情報の抽出を行うためには背景事象と標的との散乱事象との識別を行わなければならない。
+その後に飛跡の長さや方向などの物理的情報の抽出を行う。
+
+\begin{figure}
+  \centering
+  \begin{minipage}{0.4\columnwidth}
+    \begin{center}
+      \includegraphics[clip, width=\columnwidth]{eps/true.eps}
+      \caption{${}^{10}\rm{C}+{}^{4}\rm{He}$の散乱事象}
+      \label{fig:true}
+    \end{center}
+  \end{minipage}
+  \begin{minipage}{0.4\columnwidth}
+    \begin{center}
+      \includegraphics[clip, width=\columnwidth]{eps/false.eps}
+      \caption{${}^{10}\rm{C}$とクエンチガスとの散乱事象}
+      \label{fig:false}
+    \end{center}
+  \end{minipage}
+\end{figure}
+
+\section{Conventional analysis method}
+従来は、MAIKo TPC から得られるデータから背景事象の除去をHough 変換による飛跡抽出アルゴリズムを用いて行ってきた。
+Hough 変換とは画像から直線を抽出する方法の１つである。
+Hough 変換を行うことで画像は、原点からの距離 ($r$) と傾き ($\theta$) の２つの軸を持つパラメータ空間に変換される
+(Fig. \ref{fig:Hough})。
+このパラメータ空間において複数の曲線が交わる点が元の画像における直線に対応する。
+交点を特定することで元の画像の中から直線を抽出することができる。
+抽出した直線に沿って端点を探すことで、画像に含まれる直線の方向や長さなどを決定することができる。
+これらの情報に対して多くの条件を課すことで画像の識別を行う。
+この条件には多くのパラメータを必要とし、分岐条件も複雑なものとなる。
+そのため、パラメータを最適化や画像識別に多くの時間を必要とする。
+
+最適化を行ったあとの画像識別の結果をTable \ref{tab:Hough}に示す。
+最適化には100 CPU を使用して約１日かかり、
+その後の識別には１イベントあたり１秒かかった。
+この手法による識別能力を評価するために、人間が判断した評価用データを用いて評価を行った。
+評価指標のそれぞれの定義は以下の通りである。
+また、各変数の意味はTable \ref{tab:variable}の通りである。
+
+\begin{align}
+  \rm{Accuracy} &= \frac{SS+BB}{SS+SB+BS+BB}\\
+  \rm{Efficiency} &= \frac{SS}{SS+SB}\\
+  \rm{Purity} &= \frac{SS}{SS+BS}\\
+  \rm{Jaccard} &= \frac{SS}{SS+SB+BS}
+\end{align}
+
+\begin{table}
+  \begin{minipage}{0.4\columnwidth}
+    \caption{従来型の解析による\\画像識別結果}
+    \label{tab:Hough}
+    \begin{tabular}{lr}
+      \toprule
+      index & (\%)\\ \midrule
+      Accuracy & 89 \\
+      Efficiency & 94 \\
+      Purity & 84 \\
+      Jaccard & 80 \\ \bottomrule
+    \end{tabular}
+  \end{minipage}
+  \begin{minipage}{0.4\columnwidth}
+    \caption{評価指標における変数の意味}
+    \label{tab:variable}
+    \begin{center}
+      \begin{tabular}{|c|c|c|c|}
+        \hline
+        \multicolumn{2}{|c|}{} & \multicolumn{2}{|c|}{\textgt{Judged by analysis}}\\ \cline{3-4}
+        \multicolumn{2}{|c|}{} & Signal & Background \\ \hline
+        \multirow{2}{*}{Eye-scanned} & Signal & SS & SB \\ \cline{2-4}
+        & Background & BS & BB \\ \hline
+      \end{tabular}
+    \end{center}
+  \end{minipage}
+\end{table}
+
+\section{New analysis method}
+従来手法では識別に複雑な分岐条件が必要になるなどの問題点があった。
+そこで、我々は近年注目されているニューラルネットワークを用いることで、
+これらの問題点克服した新しい解析方法の開発を試みた。
 ニューラルネットワークを用いることで、
 離れた点の関係や直線の位置、角度などの従来の解析手法ではまとめて扱うことの難しい
 多くの特徴量を同時に考慮した画像識別が可能になると期待される。
@@ -51,22 +145,56 @@ MAIKo TPC から得られるデータから背景事象の除去をこれまで�
 このようなニューラルネットワークの特徴を活かすことで、
 従来のアルゴリズムでは実現が難しかった高い精度と短い識別時間を実現することが可能である。
 
-\section{Conventional analysis method}
+MAIKo TPC から得られるデータが画像であるため、画像認識に有用であるConvolutional Neural Network (CNN) を用いた。
+CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
+解析には事象の選別と情報の抽出の２つがあるため、
+２種類のニューラルネットワークを用いて解析を行った。
+データの選別を行うニューラルネットワークの構造はFig. \ref{fig:selection}、
+画像から情報を抽出するニューラルネットワークの構造はFig. \ref{fig:extraction}の通りである。
+\begin{figure}
+  \centering
+  \begin{minipage}{0.45\columnwidth}
+    \centering
+    \includegraphics[clip, width=0.8\columnwidth]{eps/event_selection.eps}
+    \caption{データの選別を行うためのニューラルネットワーク。}
+    \label{fig:selection}
+  \end{minipage}
+  \begin{minipage}{0.45\columnwidth}
+    \centering
+    \includegraphics[clip, width=0.8\columnwidth]{eps/point_detection.eps}
+    \caption{画像から情報を抽出するためのニューラルネットワーク。}
+    \label{fig:extraction}
+  \end{minipage}
+\end{figure}
 
-\section{New analysis method}
+選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの平面に射影された飛跡を入力し、
+その事象が標的と散乱した事象である確率を出力する。
+出力された確率がある値以上である場合にその事象を標的と散乱した事象であると判断する。
+このネットワークは１６層からなり、２入力１出力の形をしている。
+側面に射影した飛跡とビーム方向に射影した飛跡とでは画像の持つ意味が異なるため、
+２つの入力が別れた構造を持つネットワークを構築した。
+人間が判断したデータを用いて、学習および評価を行った。
+学習には2,700 events、評価には300 events 使用した。
+
+情報を抽出するためのネットワークは、MAIKo TPC から得られる２つの平面に射影された飛跡を入力し、
+散乱が起こった座標と反跳した${}^{4}\rm{He}$が停止した座標を出力する。
+学習を効率的に行うために、出力される座標は各軸が0--1の範囲になるように規格化した座標系で得られる。
+このネットワークは２１層からなり、２入力１出力の形をしている。
 
 \section{Result}
 
 \section{Conclusion}
 
 
-
 \begin{thebibliography}{9}
-\bibitem{maiko}
+\bibitem{mupic}
+  A.~Ochi, T.~Nagayoshi, T.~Tanimori, T.~Nagae, and M.~Nakamura
+  Nuclear Instruments and Methods in Physics Research A \textbf{471} 264 (2001)
+\bibitem{MAIKo}
   T.~Furuno, T.~Kawabata, H.~Ong, S.~Adachi, Y.~Ayyad, T.~Baba, Y.~Fujikawa, T.~Hashimoto, K.~Inaba, Y.~Ishii,
   S.~Kabuki, H.~Kubo, Y.~Matsuda, Y.~Matsuoka, T.~Mizumoto, T.~Morimoto, M.~Murata, T.~Sawano, T.~Suzuki, A.~Takada,
   J.~Tanaka, I.~Tanihata, T.~Tanimori, D.~Tran, M-, Tsumura, and H.~Watanabe
-  Nuclear Instruments and Methods in Physics Research Section A \textbf{908} 215 (2018)
+  Nuclear Instruments and Methods in Physics Research A \textbf{908} 215 (2018)
 \bibitem{tensorflow}
   A.~Davis, J.~Dean, M.~Devin, S.~Ghemawat, I.~Goodfellow, A.~Harp, G.~Irving,
   M.~Isard, Y.~Jia, R.~Jozefowicz, L.~Kaiser, M.~Kudlur, J.~Levenberg,
@@ -78,11 +206,11 @@ MAIKo TPC から得られるデータから背景事象の除去をこれまで�
 \bibitem{keras}
   F.~Chollet, et al. {Keras} (2015). \url{https://keras.io}
 
-\bibitem{cp} The abbreviation for JPS Conference Proceedings should be ``JPS Conf. Proc." in the reference list.
-\bibitem{jpsj} The abbreviation for the Journal of the Physical Society of Japan should be ``J. Phys. Soc. Jpn." in the reference list.
-\bibitem{ptep} The abbreviation for the Progress of Theoretical and Experimental Physics should be ``Prog. Theor. Exp. Phys." in the reference list.
-\bibitem{instructions} More abbreviations of journal titles are listed in ``Instructions for Preparation of Manuscript", which is available at our Web site (http://jpsj.jps.or.jp).
-\bibitem{format} F. Author, S. Author, and T. Author, Abbreviated journal title \textbf{volume in bold face}, initial page or article number (year of publication).
+%\bibitem{cp} The abbreviation for JPS Conference Proceedings should be ``JPS Conf. Proc." in the reference list.
+%\bibitem{jpsj} The abbreviation for the Journal of the Physical Society of Japan should be ``J. Phys. Soc. Jpn." in the reference list.
+%\bibitem{ptep} The abbreviation for the Progress of Theoretical and Experimental Physics should be ``Prog. Theor. Exp. Phys." in the reference list.
+%\bibitem{instructions} More abbreviations of journal titles are listed in ``Instructions for Preparation of Manuscript", which is available at our Web site (http://jpsj.jps.or.jp).
+%\bibitem{format} F. Author, S. Author, and T. Author, Abbreviated journal title \textbf{volume in bold face}, initial page or article number (year of publication).
 \end{thebibliography}
 
 \end{document}
