@@ -5,6 +5,10 @@
 \usepackage{array, booktabs}
 \usepackage{wrapfig}
 
+\makeatletter
+\newcommand{\figcaption}[1]{\def\@captype{figure}\caption{#1}}
+\newcommand{\tblcaption}[1]{\def\@captype{table}\caption{#1}}
+
 \title{New analysis method of TPC data using neural network}
 
 \author{
@@ -39,7 +43,7 @@ TPC は大きな立体角を覆うことができ、多くの物理量を同時�
 
 \section{What is MAIKo TPC}
 
-\begin{wrapfigure}{r}{20zw}
+\begin{wrapfigure}{r}{15zw}
   \begin{center}
     \includegraphics[clip, width=0.4\columnwidth]{eps/at_fig2.eps}
     \caption{MAIKo TPC の外観。}
@@ -65,18 +69,16 @@ MAIKo TPC では標的である${}^{4}\rm{He}$との散乱事象以外にもク�
 \begin{figure}
   \centering
   \begin{minipage}{0.4\columnwidth}
-    \begin{center}
-      \includegraphics[clip, width=\columnwidth]{eps/true.eps}
-      \caption{${}^{10}\rm{C}+{}^{4}\rm{He}$の散乱事象}
-      \label{fig:true}
-    \end{center}
+    \centering
+    \includegraphics[clip, width=0.9\columnwidth]{eps/true.eps}
+    \caption{${}^{10}\rm{C}+{}^{4}\rm{He}$の散乱事象}
+    \label{fig:true}
   \end{minipage}
   \begin{minipage}{0.4\columnwidth}
-    \begin{center}
-      \includegraphics[clip, width=\columnwidth]{eps/false.eps}
-      \caption{${}^{10}\rm{C}$とクエンチガスとの散乱事象}
-      \label{fig:false}
-    \end{center}
+    \centering
+    \includegraphics[clip, width=0.9\columnwidth]{eps/false.eps}
+    \caption{${}^{10}\rm{C}$とクエンチガスとの散乱事象}
+    \label{fig:false}
   \end{minipage}
 \end{figure}
 
@@ -151,18 +153,20 @@ CNN とはネットワーク内に畳み込み層を有するネットワーク�
 ２種類のニューラルネットワークを用いて解析を行った。
 データの選別を行うニューラルネットワークの構造はFig. \ref{fig:selection}、
 画像から情報を抽出するニューラルネットワークの構造はFig. \ref{fig:extraction}の通りである。
+
 \begin{figure}
   \centering
   \begin{minipage}{0.45\columnwidth}
     \centering
-    \includegraphics[clip, width=0.8\columnwidth]{eps/event_selection.eps}
-    \caption{データの選別を行うためのニューラルネットワーク。}
+    \includegraphics[clip, width=0.7\columnwidth]{eps/event_selection.eps}
+    \caption{データの選別を行うためのニューラルネットワーク}
     \label{fig:selection}
   \end{minipage}
+  \hfill
   \begin{minipage}{0.45\columnwidth}
     \centering
-    \includegraphics[clip, width=0.8\columnwidth]{eps/point_detection.eps}
-    \caption{画像から情報を抽出するためのニューラルネットワーク。}
+    \includegraphics[clip, width=0.7\columnwidth]{eps/point_detection.eps}
+    \caption{画像から情報を抽出するためのニューラルネットワーク}
     \label{fig:extraction}
   \end{minipage}
 \end{figure}
@@ -174,17 +178,82 @@ CNN とはネットワーク内に畳み込み層を有するネットワーク�
 側面に射影した飛跡とビーム方向に射影した飛跡とでは画像の持つ意味が異なるため、
 ２つの入力が別れた構造を持つネットワークを構築した。
 人間が判断したデータを用いて、学習および評価を行った。
-学習には2,700 events、評価には300 events 使用した。
+学習には2,700 events、評価には300 events を使用した。
 
 情報を抽出するためのネットワークは、MAIKo TPC から得られる２つの平面に射影された飛跡を入力し、
 散乱が起こった座標と反跳した${}^{4}\rm{He}$が停止した座標を出力する。
 学習を効率的に行うために、出力される座標は各軸が0--1の範囲になるように規格化した座標系で得られる。
 このネットワークは２１層からなり、２入力１出力の形をしている。
+教師データには従来手法で決定した座標を用いた。
+学習には3,012 events、評価には1,554 events を使用した。
+
+学習環境は以下の通りである。
+\begin{itemize}
+\item Intel Core i7
+\item Nvidia GeForce GTX 1080Ti
+\item Ubuntu 18.04 LTS
+\item Keras + TensorFlow
+\end{itemize}
 
 \section{Result}
+選別のためのニューラルネットワークは、2,700 events に対して200 回学習を行った。
+学習にはおよそ26分、その後の推測にはおよそ1秒かかった。
+学習後の識別能力および学習過程をTable \ref{tab:result_selection}、Fig. \ref{fig:history_selection}に示す。
+従来の手法と比較してすべての指標においてより高精度に選別が可能となった。
+また、パラメータチューニングおよび選別に要する時間も大きく短縮することができた。
+
+\begin{figure}
+  \begin{minipage}{0.4\columnwidth}
+    \centering
+    \tblcaption{新手法の識別能力}
+    \label{tab:result_selection}
+    \begin{tabular}{lrr}
+      \toprule
+      index & Neural network (\%) & Hough (\%) \\ \midrule
+      Accuracy & 96 & 89 \\
+      Efficiency & 98 & 94 \\
+      Purity & 94 & 84 \\
+      Jaccard & 93 & 80 \\ \bottomrule
+    \end{tabular}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.4\columnwidth}
+    \centering
+    \includegraphics[clip,width=\columnwidth]{eps/event_selection_history.eps}
+    \caption{識別のためのニューラルネットワークの学習過程}
+    \label{fig:history_selection}
+  \end{minipage}
+\end{figure}
+
+座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
+学習にはおよそ270分、その後の推測にはおよそ2秒かかった。
+学習後にニューラルネットワークが予測した座標と従来手法によって決定した座標の比較をFig. \ref{fig:result_detection} に示す。
+学習過程をFig. \ref{fig:histroy_detection}に示す。
+従来手法の精度を維持しつつ、
+従来の手法と比較してパラメータチューニングおよび情報の抽出にかかる時間を短縮することができた。
+
+\begin{figure}
+  \centering
+  \begin{minipage}{0.4\columnwidth}
+    \centering
+    \includegraphics[clip,width=\columnwidth]{eps/point_detection_compair.eps}
+    \caption{ニューラルネットワークによって決定した座標とHough 変換によって決定した座標との比較}
+    \label{fig:result_detection}
+  \end{minipage}
+  \begin{minipage}{0.4\columnwidth}
+    \centering
+    \includegraphics[clip,width=\columnwidth]{eps/point_detection_history.eps}
+    \caption{座標決定のためのニューラルネットワークの学習過程}
+    \label{fig:history_detection}
+  \end{minipage}
+\end{figure}
 
 \section{Conclusion}
-
+従来のHough 変換を用いた画像識別アルゴリズムに変わる、
+ニューラルネットワークを用いた新手法の開発を行った。
+新手法は従来のものよりも高速かつ高精度に画像を識別することが可能となった。
+また、飛跡情報の抽出については従来の精度を保ちつつ、高速に行うことが可能となった。
+ニューラルネットワークを用いた解析手法はTPC の解析に有用であることがわかった。
 
 \begin{thebibliography}{9}
 \bibitem{mupic}
@@ -200,11 +269,11 @@ CNN とはネットワーク内に畳み込み層を有するネットワーク�
   M.~Isard, Y.~Jia, R.~Jozefowicz, L.~Kaiser, M.~Kudlur, J.~Levenberg,
   D.~Man\'{e}, R.~Monga, S.~Moore, D.~Murray, C.~Olah, M.~Schuster, J.~Shlens,
   B.~Steiner, I.~Sutskever, K.~Talwar, P.~Tucker, V.~Vanhoucke, V.~Vasudevan,
-  F.~Vi\`{e}gas, O.~Vinyals, P.~Warden, M.~Wattenberg, M.~Wicke, Y.~Yu, and
-  X.~Zheng, {TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems} (2015).
+  F.~Vi\'{e}gas, O.~Vinyals, P.~Warden, M.~Wattenberg, M.~Wicke, Y.~Yu, and
+  X.~Zheng, (2015).
   \url{https://tensorflow.org}
 \bibitem{keras}
-  F.~Chollet, et al. {Keras} (2015). \url{https://keras.io}
+  F.~Chollet, et al. (2015). \url{https://keras.io}
 
 %\bibitem{cp} The abbreviation for JPS Conference Proceedings should be ``JPS Conf. Proc." in the reference list.
 %\bibitem{jpsj} The abbreviation for the Journal of the Physical Society of Japan should be ``J. Phys. Soc. Jpn." in the reference list.
