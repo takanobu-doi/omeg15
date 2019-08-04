@@ -23,11 +23,19 @@
 
 \email{doi.takanobu.68x@st.kyoto-u.ac.jp}
 
-\recdate{} % Write received date here
+\recdate{2019/8/4} % Write received date here
 
-\abst{} % Write abstract here
+\abst{
+  TPC を用いた実験では大きな立体角で複数の物理量を同時に測定することができる。
+  従来はHough 変換を用いてデータの解析を行って来た。
+  この方法を用いた解析には多くの労力を要する。
+  近年、画像データの認識にはニューラルネットワークが注目されている。
+  新しくニューラルネットワークを用いた解析方法の開発を行った。
+  新しく開発した手法を用いることで、従来の方法と比較して高速に解析できるようになった。
+} % Write abstract here
 
-\kword{neural networks, TPC, MAIKo} % Write keywords here
+\kword{neural networks, convolutional neural networks,
+  TPC, active target, MAIKo TPC} % Write keywords here
 
 \begin{document}
 \maketitle
@@ -83,10 +91,10 @@ MAIKo TPC では標的である${}^{4}\rm{He}$との散乱事象以外にもク�
 \end{figure}
 
 \section{Conventional analysis method}
-従来は、MAIKo TPC から得られるデータから背景事象の除去をHough 変換による飛跡抽出アルゴリズムを用いて行ってきた。
-Hough 変換とは画像から直線を抽出する方法の１つである。
-Hough 変換を行うことで画像は、原点からの距離 ($r$) と傾き ($\theta$) の２つの軸を持つパラメータ空間に変換される
-(Fig. \ref{fig:Hough})。
+従来は、MAIKo TPC から得られるデータから背景事象の除去を画像から直線を抽出する方法の１つである
+Hough 変換を用いたアルゴリズムによって行ってきた。
+Hough 変換を行うことで画像は、原点からの距離 ($r$) と傾き ($\theta$) の
+２つの軸を持つパラメータ空間に変換される。
 このパラメータ空間において複数の曲線が交わる点が元の画像における直線に対応する。
 交点を特定することで元の画像の中から直線を抽出することができる。
 抽出した直線に沿って端点を探すことで、画像に含まれる直線の方向や長さなどを決定することができる。
@@ -94,49 +102,20 @@ Hough 変換を行うことで画像は、原点からの距離 ($r$) と傾き 
 この条件には多くのパラメータを必要とし、分岐条件も複雑なものとなる。
 そのため、パラメータを最適化や画像識別に多くの時間を必要とする。
 
-最適化を行ったあとの画像識別の結果をTable \ref{tab:Hough}に示す。
 最適化には100 CPU を使用して約１日かかり、
 その後の識別には１イベントあたり１秒かかった。
-この手法による識別能力を評価するために、人間が判断した評価用データを用いて評価を行った。
-評価指標のそれぞれの定義は以下の通りである。
-また、各変数の意味はTable \ref{tab:variable}の通りである。
-
-\begin{align}
-  \rm{Accuracy} &= \frac{SS+BB}{SS+SB+BS+BB}\\
-  \rm{Efficiency} &= \frac{SS}{SS+SB}\\
-  \rm{Purity} &= \frac{SS}{SS+BS}\\
-  \rm{Jaccard} &= \frac{SS}{SS+SB+BS}
-\end{align}
-
-\begin{table}
-  \begin{minipage}{0.4\columnwidth}
-    \caption{従来型の解析による\\画像識別結果}
-    \label{tab:Hough}
-    \begin{tabular}{lr}
-      \toprule
-      index & (\%)\\ \midrule
-      Accuracy & 89 \\
-      Efficiency & 94 \\
-      Purity & 84 \\
-      Jaccard & 80 \\ \bottomrule
-    \end{tabular}
-  \end{minipage}
-  \begin{minipage}{0.4\columnwidth}
-    \caption{評価指標における変数の意味}
-    \label{tab:variable}
-    \begin{center}
-      \begin{tabular}{|c|c|c|c|}
-        \hline
-        \multicolumn{2}{|c|}{} & \multicolumn{2}{|c|}{\textgt{Judged by analysis}}\\ \cline{3-4}
-        \multicolumn{2}{|c|}{} & Signal & Background \\ \hline
-        \multirow{2}{*}{Eye-scanned} & Signal & SS & SB \\ \cline{2-4}
-        & Background & BS & BB \\ \hline
-      \end{tabular}
-    \end{center}
-  \end{minipage}
-\end{table}
+最適化を行ったあとの画像識別の結果をTable \ref{tab:result_selection}に示す。
+この手法による識別能力の評価には、人間が判断した評価用データを用いて行った。
 
 \section{New analysis method}
+
+\begin{wrapfigure}{r}{15zw}
+  \centering
+  \includegraphics[clip, width=15zw]{eps/event_selection.eps}
+  \caption{データの選別を行うためのニューラルネットワーク}
+  \label{fig:selection}
+\end{wrapfigure}
+
 従来手法では識別に複雑な分岐条件が必要になるなどの問題点があった。
 そこで、我々は近年注目されているニューラルネットワークを用いることで、
 これらの問題点克服した新しい解析方法の開発を試みた。
@@ -147,29 +126,19 @@ Hough 変換を行うことで画像は、原点からの距離 ($r$) と傾き 
 このようなニューラルネットワークの特徴を活かすことで、
 従来のアルゴリズムでは実現が難しかった高い精度と短い識別時間を実現することが可能である。
 
+\begin{wrapfigure}{r}{15zw}
+  \centering
+  \includegraphics[clip, width=15zw]{eps/point_detection.eps}
+  \caption{画像から情報を抽出するためのニューラルネットワーク}
+  \label{fig:extraction}
+\end{wrapfigure}
+
 MAIKo TPC から得られるデータが画像であるため、画像認識に有用であるConvolutional Neural Network (CNN) を用いた。
 CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
 解析には事象の選別と情報の抽出の２つがあるため、
 ２種類のニューラルネットワークを用いて解析を行った。
 データの選別を行うニューラルネットワークの構造はFig. \ref{fig:selection}、
 画像から情報を抽出するニューラルネットワークの構造はFig. \ref{fig:extraction}の通りである。
-
-\begin{figure}
-  \centering
-  \begin{minipage}{0.45\columnwidth}
-    \centering
-    \includegraphics[clip, width=0.7\columnwidth]{eps/event_selection.eps}
-    \caption{データの選別を行うためのニューラルネットワーク}
-    \label{fig:selection}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.45\columnwidth}
-    \centering
-    \includegraphics[clip, width=0.7\columnwidth]{eps/point_detection.eps}
-    \caption{画像から情報を抽出するためのニューラルネットワーク}
-    \label{fig:extraction}
-  \end{minipage}
-\end{figure}
 
 選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの平面に射影された飛跡を入力し、
 その事象が標的と散乱した事象である確率を出力する。
@@ -187,23 +156,42 @@ CNN とはネットワーク内に畳み込み層を有するネットワーク�
 教師データには従来手法で決定した座標を用いた。
 学習には3,012 events、評価には1,554 events を使用した。
 
-学習環境は以下の通りである。
-\begin{itemize}
-\item Intel Core i7
-\item Nvidia GeForce GTX 1080Ti
-\item Ubuntu 18.04 LTS
-\item Keras + TensorFlow
-\end{itemize}
+学習環境はIntel Core i7、Nvidia GeForce GTX 1080Ti、Ubuntu 18.04 LTS、
+TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 
 \section{Result}
 選別のためのニューラルネットワークは、2,700 events に対して200 回学習を行った。
 学習にはおよそ26分、その後の推測にはおよそ1秒かかった。
-学習後の識別能力および学習過程をTable \ref{tab:result_selection}、Fig. \ref{fig:history_selection}に示す。
+学習後の識別能力および学習過程をTable \ref{tab:result_selection}、
+Fig. \ref{fig:history_selection}に示す。
+各指標の定義は式 (\ref{eq:acc})--(\ref{eq:jac})、
+各変数の意味はTable \ref{tab:variable}の通りである。
 従来の手法と比較してすべての指標においてより高精度に選別が可能となった。
 また、パラメータチューニングおよび選別に要する時間も大きく短縮することができた。
 
+\begin{table}
+  \begin{center}
+  \caption{評価指標における変数の意味}
+  \label{tab:variable}
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      \multicolumn{2}{|c|}{} & \multicolumn{2}{c|}{\textgt{Judged by analysis}}\\ \cline{3-4}
+      \multicolumn{2}{|c|}{} & Signal & Background \\ \hline
+      \multirow{2}{*}{Eye-scanned} & Signal & SS & SB \\ \cline{2-4}
+      & Background & BS & BB \\ \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{align}
+  \rm{Accuracy} &= \frac{\rm{SS}+\rm{BB}}{\rm{SS}+\rm{SB}+\rm{BS}+\rm{BB}} \label{eq:acc}\\
+  \rm{Efficiency} &= \frac{\rm{SS}}{\rm{SS}+\rm{SB}}\\
+  \rm{Purity} &= \frac{\rm{SS}}{\rm{SS}+\rm{BS}}\\
+  \rm{Jaccard} &= \frac{\rm{SS}}{\rm{SS}+\rm{SB}+\rm{BS}} \label{eq:jac}
+\end{align}
+
 \begin{figure}
-  \begin{minipage}{0.4\columnwidth}
+  \begin{minipage}{0.45\columnwidth}
     \centering
     \tblcaption{新手法の識別能力}
     \label{tab:result_selection}
@@ -217,9 +205,9 @@ CNN とはネットワーク内に畳み込み層を有するネットワーク�
     \end{tabular}
   \end{minipage}
   \hfill
-  \begin{minipage}{0.4\columnwidth}
+  \begin{minipage}{0.45\columnwidth}
     \centering
-    \includegraphics[clip,width=\columnwidth]{eps/event_selection_history.eps}
+    \includegraphics[clip,width=0.8\columnwidth]{eps/event_selection_history.eps}
     \caption{識別のためのニューラルネットワークの学習過程}
     \label{fig:history_selection}
   \end{minipage}
@@ -228,21 +216,22 @@ CNN とはネットワーク内に畳み込み層を有するネットワーク�
 座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
 学習にはおよそ270分、その後の推測にはおよそ2秒かかった。
 学習後にニューラルネットワークが予測した座標と従来手法によって決定した座標の比較をFig. \ref{fig:result_detection} に示す。
-学習過程をFig. \ref{fig:histroy_detection}に示す。
+学習過程をFig. \ref{fig:history_detection}に示す。
 従来手法の精度を維持しつつ、
 従来の手法と比較してパラメータチューニングおよび情報の抽出にかかる時間を短縮することができた。
 
 \begin{figure}
   \centering
-  \begin{minipage}{0.4\columnwidth}
+  \begin{minipage}{0.45\columnwidth}
     \centering
-    \includegraphics[clip,width=\columnwidth]{eps/point_detection_compair.eps}
+    \includegraphics[clip,width=0.9\columnwidth]{eps/point_detection_compair.eps}
     \caption{ニューラルネットワークによって決定した座標とHough 変換によって決定した座標との比較}
     \label{fig:result_detection}
   \end{minipage}
-  \begin{minipage}{0.4\columnwidth}
+  \hfill
+  \begin{minipage}{0.45\columnwidth}
     \centering
-    \includegraphics[clip,width=\columnwidth]{eps/point_detection_history.eps}
+    \includegraphics[clip,width=0.9\columnwidth]{eps/point_detection_history.eps}
     \caption{座標決定のためのニューラルネットワークの学習過程}
     \label{fig:history_detection}
   \end{minipage}
