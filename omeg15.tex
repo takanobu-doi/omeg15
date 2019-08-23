@@ -26,7 +26,7 @@
 \recdate{2019/8/4} % Write received date here
 
 \abst{
-  TPC を用いた実験では荷電粒子の奇跡を3次元的に測定することができる。
+  TPC を用いた実験では荷電粒子の軌跡を3次元的に測定することができる。
   従来はHough 変換を用いてデータの解析を行って来た。
   この方法を用いた解析には多くの労力を要する。
   近年、画像データの認識にはニューラルネットワークが注目されている。
@@ -53,9 +53,9 @@ TPCから得られる画像データから飛跡情報を抽出には多くの�
 
 \section{What is MAIKo TPC}
 
-\begin{wrapfigure}{r}{15zw}
+\begin{wrapfigure}{r}{12zw}
   \begin{center}
-    \includegraphics[clip, width=0.4\columnwidth]{eps/at_fig2.eps}
+    \includegraphics[clip, width=12zw]{eps/MAIKo.eps}
     \caption{MAIKo TPC の外観。}
     \label{fig:MAIKo}
   \end{center}
@@ -76,7 +76,7 @@ $\mu$-PIC は直交する2種類のストリップを用いて信号を読み出
 荷電粒子の飛跡は2つの2次元画像の組として得られる。
 $\mu$-PIC のストリップは400 $\mu$m 間隔で256 本ある。
 時間方向は100 MHz で1024 sample 測定する。
-そのため、MAIKo TPC は256 $\times$ 1024 pixels の画像が2枚得られる。
+そのため、MAIKo TPC は256 $\times$ 1024 pixels のz-y平面とx-y平面に射影された2つの画像が得られる。
 
 近年、大阪大学核物理研究センター (RCNP) において、
 $\mu$-PIC は直交する2種類のストリップを用いて読み出しを行うため、
@@ -201,7 +201,7 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 
 \begin{figure}
   \centering
-  \includegraphics[clip,width=0.9\columnwidth]{eps/point_detection_compair.eps}
+  \includegraphics[clip,width=0.7\columnwidth]{eps/point_detection_compair.eps}
   \caption{ニューラルネットワークによって決定した座標とHough 変換によって決定した座標との比較}
   \label{fig:result_detection}
 \end{figure}
