@@ -49,37 +49,37 @@
 で読み出しを行う、
 Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo} (Fig. \ref{fig:MAIKo}) を開発した。
 TPC は検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
-電子をドリフト電場により読み出し面にドリフトさせることで
-(Fig. \ref{fig:MAIKo} 中では下向き) 飛跡を検出する。
+電子をドリフト電場により読み出し面にドリフトさせる
+(Fig. \ref{fig:MAIKo} 中では下向きに移動させる) ことで飛跡を検出する。
 $\mu$-PIC は2つの直交する読み出しストリップを持つので、
 電子が到達したx, z座標を決定できる。
 また、電子が到達するまでのドリフト時間により、
-飛跡から読み出し面までの距離 (y方向の距離) を決定することが出来る。
+飛跡から読み出し面までの距離 (y座標) を決定することが出来る。
 x, y, zの座標が決定できるので、飛跡を3次元的に再構成することが出来る。
 
 \begin{figure}
   \centering
   \begin{minipage}{0.4\columnwidth}
     \centering
-    \includegraphics[clip, width=0.7\columnwidth]{eps/MAIKo.eps}
-    \caption{MAIKo TPC の外観。}
-    \label{fig:MAIKo}
+    \includegraphics[clip, width=0.9\columnwidth]{eps/upic_struc.eps}
+    \caption{$\mu$-PIC の構造}
+    \label{fig:uPIC}
   \end{minipage}
   \hfill
   \begin{minipage}{0.4\columnwidth}
     \centering
-    \includegraphics[clip, width=0.7\columnwidth]{eps/upic_struc.eps}
-    \caption{$\mu$-PIC の構造}
-    \label{fig:uPIC}
+    \includegraphics[clip, width=0.9\columnwidth]{eps/MAIKo.eps}
+    \caption{MAIKo TPC の外観。}
+    \label{fig:MAIKo}
   \end{minipage}
 \end{figure}
 
 この検出器では検出ガスを実験の標的として用いる (アクティブ標的) 。
 この手法を用いることで、散乱が検出器内部で起こるため、
 大立体角で低エネルギー粒子の測定を行うことが出来る。
-広く標的ガスとして用いられる $\rm{He}$ や $\rm{H}_{2}$は放電体制が低いので、
-通常は放電体制の高い $\rm{CO}_{2}$ やイソブタンをクエンチングガスとして
-混入させてアクティブ標的を運用する。
+広く標的ガスとして用いられる $\rm{He}$ や $\rm{H}_{2}$は放電耐性が低いので、
+通常は放電耐性の高い $\rm{CO}_{2}$ やイソブタンをクエンチングガスとして
+混入させてTPC を運用する。
 このとき、クエンチングガスからの散乱は背景事象となる。
 近年、大阪大学核物理研究センター (RCNP) において、
 MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測定が初めて行われた。
@@ -90,7 +90,7 @@ MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測�
 ビーム軸に垂直な面に射影された画像 (cathode track) の2つの画像として取得される。
 $\mu$-PIC のストリップは400 $\mu$m 間隔で256 本あり、
 時間方向は100 MHz で1024 sample 測定されるので、
-各画像は256 $\times$ 1024 pixels である。
+取得される画像の解像度は256 $\times$ 1024 pixels となる。
 Fig. \ref{fig:true}、\ref{fig:false} はRCNPで行われた実験で取得された
 データの一例である。
 Fig. \ref{fig:true} は$\rm{He}$ガスと散乱した事象、
@@ -130,7 +130,7 @@ Fig. \ref{fig:true}, \ref{fig:false} のような画像データに対して、
 
 \section{Conventional analysis method}
 従来は、得られたデータから背景事象の除去を行うのに、
-画像中の直線を抽出する方法の１つである
+画像中の直線を抽出する手法の１つである
 Hough 変換を用いたアルゴリズムによって行ってきた。
 Hough 変換を行うことで画像に含まれる軌跡上の点は、
 原点からの距離 ($r$) と傾き ($\theta$) の
@@ -149,11 +149,10 @@ $\rm{He}$との散乱事象を選別することが出来る。
 
 パラメータの最適化には100 CPU を使用して約１日かかり、
 その後の識別には１ eventあたり１秒かかった。
-最適化を行ったあとの画像識別の結果をTable \ref{tab:result_selection}に示す。
 この手法による識別能力の評価には、画像データを人間が目で見て
 散乱事象もしくは背景事象と判断した3000イベントを評価用データとして用いて行った。
 全事象のうち、散乱事象または背景事象の区別を正しく判断することが
-出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%であった。
+出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
 \section{New analysis method}
 
@@ -198,18 +197,17 @@ $\rm{He}$との散乱事象を選別することが出来る。
   \end{minipage}
 \end{figure}
 
-MAIKo TPC から得られるデータが画像であるため、画像認識に有用であるConvolutional Neural Network (CNN) を用いた。
+MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされるConvolutional Neural Network (CNN) を用いた。
 CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
-解析には事象の選別と軌跡情報の抽出の２つの段階があるため、
+解析には事象の選別と飛跡情報の抽出の２つの段階があるため、
 ２種類のニューラルネットワークを用いて解析を行った。
 事象の選別を行うニューラルネットワークと
-画像から軌跡情報を抽出するニューラルネットワークの構造を
+画像から飛跡情報を抽出するニューラルネットワークの構造を
 それぞれFig. \ref{fig:selection}とFig. \ref{fig:extraction}に示す。
 
-事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの平面に射影された飛跡画像を入力し、
+事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
 その事象が標的と散乱した事象である確率を出力する。
 出力された確率がある値以上である場合にその事象を標的と散乱した事象であると判断する。
-このネットワークは１６層からなり、２入力１出力の形をしている。
 側面に射影した飛跡とビーム方向に射影した飛跡とでは画像の持つ意味が異なるため、
 ２つの入力が別れた構造を持つネットワークを構築した。
 人間が判断したデータを用いて、学習および評価を行った。
