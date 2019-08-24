@@ -26,9 +26,9 @@
 \recdate{2019/8/4} % Write received date here
 
 \abst{
-  TPC を用いた実験では荷電粒子の飛跡を3次元的に測定することができる。
+  TPC を用いた実験では荷電粒子の飛跡を測定することができる。
   TPC では3次元的な荷電粒子の飛跡を2次元平面に射影した画像として得られるので、
-  荷電粒子の飛跡を決定するために画像解析を行う必要がある。
+  データの解析には画像解析を行う必要がある。
   従来はHough 変換を用いてデータの解析を行って来たが、
   この方法を用いた解析には多くの労力を要する。
   近年、画像データの認識にはニューラルネットワークが注目されている。
@@ -43,22 +43,28 @@
 \maketitle
 
 \section{Introduction}
-\begin{wrapfigure}{r}{12zw}
-  \begin{center}
-    \vspace{-4zw}
-    \includegraphics[clip, width=12zw]{eps/MAIKo.eps}
+\begin{figure}
+  \begin{minipage}{0.4\columnwidth}
+    \centering
+    \includegraphics[clip, width=0.8\columnwidth]{eps/MAIKo.eps}
     \caption{MAIKo TPC の外観。}
     \label{fig:MAIKo}
-  \end{center}
-\end{wrapfigure}
+  \end{minipage}
+  \begin{minipage}{0.4\columnwidth}
+    \centering
+    \includegraphics[clip, width=0.8\columnwidth]{eps/upic_struc.eps}
+    \caption{$\mu$-PIC の構造}
+    \label{fig:uPIC}
+  \end{minipage}
+\end{figure}
 近年、荷電粒子の飛跡を測定する検出器としてTime Projection Chamber (TPC) が
 広く用いられている。
-我々は不安定核実験に用いるためにMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic} 
+我々は不安定核実験に用いるためにMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic} (Fig. \ref{fig:uPIC}) 
 で読み出しを行う、
 Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo} (Fig. \ref{fig:MAIKo}) を開発した。
-検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
+TPC は検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
 電子をドリフト電場により読み出し面にドリフトさせることで
-(Fig. \ref{fig:MAIKo} 中では下向き) 検出する。
+(Fig. \ref{fig:MAIKo} 中では下向き) 飛跡を検出する。
 $\mu$-PIC は2つの直交する読み出しストリップを持つので、
 電子が到達したx, z座標を決定できる。
 また、電子が到達するまでのドリフト時間により、
@@ -73,22 +79,18 @@ x, y, zの座標が決定できるので、飛跡を3次元的に再構成する
 MAIKo TPC の大きさは102.4 mm (W) $\times$ 102.4 mm (D) $\times$ 140.0 mm (H) である。
 混入させてアクティブ標的を運用する。
 このとき、クエンチングガスからの散乱は背景事象となる。
-
 近年、大阪大学核物理研究センター (RCNP) において、
 MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測定が初めて行われた。
 この実験では標的ガスとして$\rm{He}$、クエンチングガスとして$\rm{CO}_{2}$を
 用いた。
 
-$\mu$-PIC は直交する2種類のストリップを用いて信号を読み出すため、
-荷電粒子の飛跡は2つの側面に射影された2次元画像の組として得られる。
+荷電粒子の飛跡はビーム軸に平行な面に射影された画像 (anode track) と
+ビーム軸に垂直な面に射影された画像 (cathode track) の2つの画像として取得される。
 $\mu$-PIC のストリップは400 $\mu$m 間隔で256 本あり、
 時間方向は100 MHz で1024 sample 測定されるので、
-MAIKo TPC からは飛跡が2つの平面に射影され、
-256 $\times$ 1024 pixels の2つの画像が組で得られる。
+各画像は256 $\times$ 1024 pixels である。
 Fig. \ref{fig:true}、\ref{fig:false} はRCNPで行われた実験で取得された
 データの一例である。
-各図は左側がビームと平行な側面に射影された飛跡、
-右側がビームと垂直な面に射影された飛跡を表す。
 Fig. \ref{fig:true} は$\rm{He}$ガスと散乱した事象、
 Fig. \ref{fig:false} はクエンチングガスと散乱した事象である。
 
