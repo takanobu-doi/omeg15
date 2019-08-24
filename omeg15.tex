@@ -135,12 +135,12 @@ $r$ と $\theta$が一意に決定され、元の画像における直線
 
 \section{New analysis method}
 
-\begin{wrapfigure}{r}{15zw}
-  \centering
-  \includegraphics[clip, width=15zw]{eps/event_selection.eps}
-  \caption{データの選別を行うためのニューラルネットワーク}
-  \label{fig:selection}
-\end{wrapfigure}
+%\begin{wrapfigure}{r}{15zw}
+%  \centering
+%  \includegraphics[clip, width=15zw]{eps/event_selection.eps}
+%  \caption{データの選別を行うためのニューラルネットワーク}
+%  \label{fig:selection}
+%\end{wrapfigure}
 
 従来手法では識別に複雑な分岐条件が必要になるなどの問題点があった。
 そこで、我々は近年注目されているニューラルネットワークを用いることで、
@@ -152,12 +152,28 @@ $r$ と $\theta$が一意に決定され、元の画像における直線
 このようなニューラルネットワークの特徴を活かすことで、
 従来のアルゴリズムでは実現が難しかった高い精度と短い識別時間を実現することが可能である。
 
-\begin{wrapfigure}{r}{15zw}
+%\begin{wrapfigure}{r}{15zw}
+%  \centering
+%  \includegraphics[clip, width=15zw]{eps/point_detection.eps}
+%  \caption{画像から情報を抽出するためのニューラルネットワーク}
+%  \label{fig:extraction}
+%\end{wrapfigure}
+\begin{figure}
   \centering
-  \includegraphics[clip, width=15zw]{eps/point_detection.eps}
-  \caption{画像から情報を抽出するためのニューラルネットワーク}
-  \label{fig:extraction}
-\end{wrapfigure}
+  \begin{minipage}{0.4\columnwidth}
+    \centering
+    \includegraphics[clip, width=0.9\columnwidth]{eps/event_selection.eps}
+    \caption{データの選別を行うためのニューラルネットワーク}
+    \label{fig:selection}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.4\columnwidth}
+    \centering
+    \includegraphics[clip, width=0.9\columnwidth]{eps/point_detection.eps}
+    \caption{画像から情報を抽出するためのニューラルネットワーク}
+    \label{fig:extraction}
+  \end{minipage}
+\end{figure}
 
 MAIKo TPC から得られるデータが画像であるため、画像認識に有用であるConvolutional Neural Network (CNN) を用いた。
 CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
@@ -187,6 +203,14 @@ CNN とはネットワーク内に畳み込み層を有するネットワーク�
 TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 
 \section{Result}
+\begin{wrapfigure}{r}{25zw}
+  \vspace{-4zw}
+  \centering
+  \includegraphics[clip, width=25zw]{eps/point_detection_compair.eps}
+  \caption{ニューラルネットワークによって決定した座標とHough変換によって決定した座標との比較}
+  \label{fig:result_detection}
+\end{wrapfigure}
+
 選別のためのニューラルネットワークは、2,700 events に対して200 回学習を行った。
 学習にはおよそ26分、その後の推測にはおよそ1秒かかった。
 従来手法の評価に用いた実験データのうち、300イベントを用いて評価を行った結果、
@@ -197,15 +221,11 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
 学習にはおよそ270分、その後の推測にはおよそ2秒かかった。
 学習後にニューラルネットワークが予測した座標と従来手法によって決定した座標の比較をFig. \ref{fig:result_detection} に示す。
+赤色の点は散乱が起こった点、緑色は反跳粒子が停止した点を表す。
+丸点は従来型の手法を用いて決定した点 (学習に用いたデータ) 、
+バツ点はニューラルネットワークを用いて決定した点を表す。
 従来手法の精度を維持しつつ、
 従来の手法と比較してパラメータチューニングおよび情報の抽出にかかる時間を短縮することができた。
-
-\begin{figure}
-  \centering
-  \includegraphics[clip,width=0.7\columnwidth]{eps/point_detection_compair.eps}
-  \caption{ニューラルネットワークによって決定した座標とHough 変換によって決定した座標との比較}
-  \label{fig:result_detection}
-\end{figure}
 
 \section{Conclusion}
 従来のHough 変換を用いた画像識別アルゴリズムに変わる、
