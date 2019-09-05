@@ -45,32 +45,37 @@
 \section{Introduction}
 近年、荷電粒子の飛跡を測定する検出器としてTime Projection Chamber (TPC) が
 広く用いられている。
-我々は不安定核実験のためにMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic} (Fig. \ref{fig:uPIC}) 
-を用いた
-Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo} (Fig. \ref{fig:MAIKo}) を開発した。
+我々は不安定核実験のためにMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic}を用いた
+Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo}を開発した。
 TPC は検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
-電子をドリフト電場により読み出し面にドリフトさせる
-(Fig. \ref{fig:MAIKo} 中では下向きに移動させる) ことで飛跡を検出する。
-$\mu$-PIC は2方向の直交する読み出しストリップを持つので、
-電子が到達したx, z座標を決定できる。
-また、電子が到達するまでのドリフト時間により、
-飛跡から読み出し面までの距離 (y座標) を決定することが出来る。
+電子をドリフト電場 (Fig. \ref{fig:MAIKo} 中上向き矢印) により読み出し面にドリフトさせる
+(Fig. \ref{fig:MAIKo} 中下向きに移動させる) ことで飛跡を検出する。
+In Fig. \ref{fig:uPIC}, the $\mu$-PIC has of 256 anode strips and 256 cathode strips
+which are arranged orthogonally.
+These strips are aligned at 400-um intervals.
+anode strip は Fig. \ref{fig:MAIKo}のx軸の方向、
+cathode strip は z軸の方向と平行である。
+The signals induced by the drifted electron are read out through the anode and 
+cathode strips which provide the 2-dimensional position (x-axis and z-axis) 
+of the particle tracks.
+The vertical position (y-axis) of the tracks are determined 
+from the drift time of the electrons.
 x, y, zの座標が決定できるので、飛跡を3次元的に再構成することが出来る。
 
 \begin{figure}
   \centering
   \begin{minipage}{0.4\columnwidth}
     \centering
-    \includegraphics[clip, width=0.9\columnwidth]{eps/upic_struc.eps}
-    \caption{$\mu$-PIC の構造}
-    \label{fig:uPIC}
+    \includegraphics[clip, width=0.9\columnwidth]{eps/MAIKo.eps}
+    \caption{MAIKo TPC の外観}
+    \label{fig:MAIKo}
   \end{minipage}
   \hfill
   \begin{minipage}{0.4\columnwidth}
     \centering
-    \includegraphics[clip, width=0.9\columnwidth]{eps/MAIKo.eps}
-    \caption{MAIKo TPC の外観。}
-    \label{fig:MAIKo}
+    \includegraphics[clip, width=0.9\columnwidth]{eps/upic_struc.eps}
+    \caption{$\mu$-PIC の構造}
+    \label{fig:uPIC}
   \end{minipage}
 \end{figure}
 
@@ -83,12 +88,12 @@ x, y, zの座標が決定できるので、飛跡を3次元的に再構成する
 このとき、クエンチングガスからの散乱は背景事象となる。
 近年、大阪大学核物理研究センター (RCNP) において、
 MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測定が初めて行われた。
-この実験では標的ガスとして$\rm{He}$、クエンチングガスとして$\rm{CO}_{2}$を
-96:4 の割合で混合して用いた。
+この実験では標的ガスとして$\rm{He}$ (96\%)、クエンチングガスとして$\rm{CO}_{2}$ (4\%)を
+混合して用いた。
 
-荷電粒子の飛跡はビーム軸に平行な面に射影された画像 (anode image) と
-ビーム軸に垂直な面に射影された画像 (cathode image) の2つの画像として取得される。
-$\mu$-PIC のストリップは400 $\mu$m 間隔で256 本あり、
+anode strip に垂直な面に射影された画像 (anode image) と
+cathode strip に垂直な面に射影された画像 (cathode image) の2つの画像として取得される。
+$\mu$-PIC のストリップはで256 本あり、
 信号波高の時間変化は100 MHz で1024 samples 測定されるので、
 取得される画像の解像度は256 $\times$ 1024 pixels となる。
 Figs. \ref{fig:true} and \ref{fig:false} はRCNPで行われた実験で取得された
@@ -132,13 +137,24 @@ Figs. \ref{fig:true} and \ref{fig:false} のような画像データに対して
 従来は、得られたデータから背景事象の除去を行うのに、
 画像中の直線を抽出する手法の１つである
 Hough 変換を用いたアルゴリズムによって行ってきた。
-Hough 変換を行うことで画像に含まれる飛跡上の点は、
-原点からの距離 ($r$) と傾き ($\theta$) の
-２つの軸を持つパラメータ空間 (Hough 空間) における曲線へ変換される。
-元の画像における直線上の点はすべて同じ $r$ と $\theta$ を共有するので、
-このパラメータ空間において複数の曲線が交わる点を求めれば
-$r$ と $\theta$が一意に決定され、元の画像における直線
-を抽出することができる。
+In the Hough transformation, a hit pixel of the image at $(x_{i}, y_{i})$ is transformed into
+a curved line in the $(\theta, r)$ parameter space (Hough space)
+according to Eq. (\ref{eq:real2hough}).
+\begin{equation}
+  \label{eq:real2hough}
+  r = x_{i}\cos\theta+y_{i}\sin\theta. 
+\end{equation}
+A point at $(\theta_{i}, r_{i})$ in the Hough space specify a straight line
+in the image as given by Eq. (\ref{eq:hough2real}).
+\begin{equation}
+  \label{eq:hough2real}
+  y = -\frac{x}{\tan\theta_{j}}+\frac{r_{j}}{\sin\theta_{j}}. 
+\end{equation}
+
+If the pixels in the anode or cathode image lie on a straight line,
+their transformed curves intersect at one point at $(\theta_{j}, r_{j})$ in the Hough space.
+Thus, the intersection point give the particle track according to Eq. (\ref{eq:hough2real}).
+
 抽出した直線に沿って端点を探すことで、画像に含まれる飛跡の方向と長さを決定することができる。
 決定された飛跡の長さや角度、本数、配置に対して多くの条件を課すことによって、
 $\rm{He}$との散乱事象を選別することが出来る。
@@ -157,13 +173,6 @@ $\rm{He}$との散乱事象を選別することが出来る。
 
 \section{New analysis method}
 
-%\begin{wrapfigure}{r}{15zw}
-%  \centering
-%  \includegraphics[clip, width=15zw]{eps/event_selection.eps}
-%  \caption{データの選別を行うためのニューラルネットワーク}
-%  \label{fig:selection}
-%\end{wrapfigure}
-
 従来手法では識別に複雑な分岐条件や多くの計算機パワー
 が必要になるという問題点があった。
 そこで、我々は近年注目されているニューラルネットワークを用いることで、
@@ -175,12 +184,7 @@ $\rm{He}$との散乱事象を選別することが出来る。
 このようなニューラルネットワークの特徴を活かすことで、
 従来のアルゴリズムでは実現が難しかった高い精度と短い識別時間を実現することが期待される。
 
-%\begin{wrapfigure}{r}{15zw}
-%  \centering
-%  \includegraphics[clip, width=15zw]{eps/point_detection.eps}
-%  \caption{画像から情報を抽出するためのニューラルネットワーク}
-%  \label{fig:extraction}
-%\end{wrapfigure}
+\vspace{-2zw}
 \begin{figure}
   \centering
   \begin{minipage}{0.4\columnwidth}
@@ -198,7 +202,8 @@ $\rm{He}$との散乱事象を選別することが出来る。
   \end{minipage}
 \end{figure}
 
-MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされるConvolutional Neural Network (CNN) を用いた。
+MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
+Convolutional Neural Network (CNN) を用いた。
 CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
 解析には事象の選別と飛跡情報の抽出の２つの段階があるため、
 ２種類のニューラルネットワークを用いて解析を行った。
@@ -227,11 +232,12 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 
 \section{Result}
 \begin{wrapfigure}{r}{25zw}
-  \vspace{-4zw}
+  \vspace{-6zw}
   \centering
-  \includegraphics[clip, width=25zw]{eps/point_detection_compair.eps}
+  \includegraphics[clip, width=25zw]{eps/compare_mono.eps}
   \caption{ニューラルネットワークによって決定した座標とHough変換によって決定した座標との比較}
   \label{fig:result_detection}
+  \vspace{-2zw}
 \end{wrapfigure}
 
 事象選別のためのニューラルネットワークは、2,700 events に対して200 回学習を行った。
@@ -244,12 +250,13 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
 学習にはおよそ270分、その後の推測には1,554 events に対しておよそ2秒かかった。
 学習後にニューラルネットワークが予測した座標と従来手法によって決定した座標の比較をFig. \ref{fig:result_detection} に示す。
-赤色の点は散乱が起こった点、緑色は反跳粒子が停止した点を表す。
-丸点は従来型の手法を用いて決定した点 (学習に用いたデータ) 、
-バツ点はニューラルネットワークを用いて決定した点を表す。
+学習データの散乱が起こった点を円、反跳粒子が停止した点を三角で示す。
+学習後に推論によって決定した散乱が起こった点を四角、班長粒子が停止した点をひし形で示す。
 従来手法とニューラルネットワークを用いた手法のそれぞれで決定した座標は、
 ほぼ一致している。
-つまり、従来手法の精度を維持しつつ、
+1,554 events に対して学習に用いた点とニューラルネットワークを用いて決定した点のズレは、
+平均二乗誤差で約4 mm となった。
+従来手法の精度を維持しつつ、
 従来の手法と比較してパラメータチューニングおよび情報の抽出にかかる時間を短縮することができた。
 
 \section{Conclusion}
