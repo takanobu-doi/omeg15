@@ -43,14 +43,23 @@
 \maketitle
 
 \section{Introduction}
+\begin{wrapfigure}{r}{16zw}
+  \vspace{0zw}
+  \centering
+  \includegraphics[clip, width=16zw]{eps/MAIKo.eps}
+  \caption{MAIKo TPC の概観}
+  \label{fig:MAIKo}
+  \vspace{0zw}
+\end{wrapfigure}
 近年、荷電粒子の飛跡を測定する検出器としてTime Projection Chamber (TPC) が
 広く用いられている。
 我々は不安定核実験のためにMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic}を用いた
 Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo}を開発した。
+MAIKo の概観図を Fig. \ref{fig:MAIKo} に示す。
 TPC は検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
-電子をドリフト電場 (Fig. \ref{fig:MAIKo} 中上向き矢印) により読み出し面にドリフトさせる
-(Fig. \ref{fig:MAIKo} 中下向きに移動させる) ことで飛跡を検出する。
-In Fig. \ref{fig:uPIC}, the $\mu$-PIC has of 256 anode strips and 256 cathode strips
+電子をドリフト電場 (上向き矢印) により読み出し面方向 (下向き) にドリフトさせる
+ことで飛跡を検出する。
+The $\mu$-PIC has of anode strips and cathode strips
 which are arranged orthogonally.
 These strips are aligned at 400-um intervals.
 anode strip は Fig. \ref{fig:MAIKo}のx軸の方向、
@@ -62,25 +71,9 @@ The vertical position (y-axis) of the tracks are determined
 from the drift time of the electrons.
 x, y, zの座標が決定できるので、飛跡を3次元的に再構成することが出来る。
 
-\begin{figure}
-  \centering
-  \begin{minipage}{0.4\columnwidth}
-    \centering
-    \includegraphics[clip, width=0.9\columnwidth]{eps/MAIKo.eps}
-    \caption{MAIKo TPC の外観}
-    \label{fig:MAIKo}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.4\columnwidth}
-    \centering
-    \includegraphics[clip, width=0.9\columnwidth]{eps/upic_struc.eps}
-    \caption{$\mu$-PIC の構造}
-    \label{fig:uPIC}
-  \end{minipage}
-\end{figure}
 
-この検出器では検出ガスを実験の標的として用いる (アクティブ標的) 。
-散乱が検出器内部で起こるため、大立体角で低エネルギー粒子の測定を行うことが可能となる。
+この検出器では検出ガスを実験の標的として用いるのでアクティブ標的と呼ばれる。
+アクティブ標的では散乱が検出器内部で起こるため、大立体角で低エネルギー粒子の測定を行うことが可能となる。
 広く標的ガスとして用いられるのは $\rm{He}$ や $\rm{H}_{2}$であるが、
 これらのガスは放電耐性が低いので、
 通常は放電耐性の高い $\rm{CO}_{2}$ やイソブタンをクエンチングガスとして
@@ -88,13 +81,13 @@ x, y, zの座標が決定できるので、飛跡を3次元的に再構成する
 このとき、クエンチングガスからの散乱は背景事象となる。
 近年、大阪大学核物理研究センター (RCNP) において、
 MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測定が初めて行われた。
-この実験では標的ガスとして$\rm{He}$ (96\%)、クエンチングガスとして$\rm{CO}_{2}$ (4\%)を
-混合して用いた。
+この実験では標的ガスである$\rm{He}$ (96\%)に、$\rm{CO}_{2}$ (4\%)をクエンチングガスとして
+混合して測定を行った。
 
 MAIKo TPC において荷電粒子の飛跡は、
 anode strip に垂直な面に射影された画像 (anode image) と
 cathode strip に垂直な面に射影された画像 (cathode image) の2つの画像として取得される。
-$\mu$-PIC のストリップはで256 本あり、
+$\mu$-PIC の anode and cathode strips は256 本あり、
 信号波高の時間変化は100 MHz で1024 samples 測定されるので、
 取得される画像の解像度は256 $\times$ 1024 pixels となる。
 Figs. \ref{fig:true} and \ref{fig:false} はRCNPで行われた実験で取得された
@@ -152,18 +145,17 @@ in the image as given by Eq. (\ref{eq:hough2real}).
   y = -\frac{x}{\tan\theta_{j}}+\frac{r_{j}}{\sin\theta_{j}}. 
 \end{equation}
 
-If the pixels in the anode or cathode image lie on a straight line,
+When the pixels in the anode or cathode image lie on a straight line,
 their transformed curves intersect at one point at $(\theta_{j}, r_{j})$ in the Hough space.
-Thus, the intersection point give the particle track according to Eq. (\ref{eq:hough2real}).
+Thus, the intersection point in the Hough space gives the particle track according to Eq. (\ref{eq:hough2real}).
 
-抽出した直線に沿って端点を探すことで、画像に含まれる飛跡の方向と長さを決定することができる。
-決定された飛跡の長さや角度、本数、配置に対して多くの条件を課すことによって、
+抽出した直線の長さや角度、本数、配置に対して多くの条件を課すことによって、
 $\rm{He}$との散乱事象を選別することが出来る。
-しかし、この条件を設定するには複雑な分岐を必要とし、
-多くのパラメータを導入しなければならない。
-そのため、パラメータの最適化や画像識別に多くの時間を必要とする。
 さらに、選別された事象における$\rm{He}$の飛跡の長さや角度から、
 散乱角とエネルギーを決定することが出来る。
+しかし、事象選別に必要な条件には複雑な分岐を必要とし、
+多くのパラメータを導入しなければならない。
+そのため、パラメータの最適化や画像識別に多くの時間を必要とする。
 
 パラメータの最適化には100 CPU を使用して約１日かかり、
 その後の識別には１ eventあたり１秒かかった。
@@ -204,7 +196,7 @@ $\rm{He}$との散乱事象を選別することが出来る。
 \end{figure}
 
 MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
-Convolutional Neural Network (CNN) を用いた。
+Convolutional Neural Network (CNN)~\cite{lenet,alexnet} を用いた。
 CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
 解析には事象の選別と飛跡情報の抽出の２つの段階があるため、
 ２種類のニューラルネットワークを用いて解析を行った。
@@ -257,8 +249,8 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 ほぼ一致している。
 1,554 events に対して学習に用いた点とニューラルネットワークを用いて決定した点のズレは、
 平均二乗誤差で約4 mm となった。
-従来手法の精度を維持しつつ、
 従来の手法と比較してパラメータチューニングおよび情報の抽出にかかる時間を短縮することができた。
+
 
 \section{Conclusion}
 従来のHough 変換を用いた画像識別アルゴリズムに変わる、
@@ -275,7 +267,7 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
   T.~Furuno, T.~Kawabata, H.~Ong, S.~Adachi, Y.~Ayyad, T.~Baba, Y.~Fujikawa, T.~Hashimoto, K.~Inaba, Y.~Ishii,
   S.~Kabuki, H.~Kubo, Y.~Matsuda, Y.~Matsuoka, T.~Mizumoto, T.~Morimoto, M.~Murata, T.~Sawano, T.~Suzuki, A.~Takada,
   J.~Tanaka, I.~Tanihata, T.~Tanimori, D.~Tran, M-, Tsumura, and H.~Watanabe
-  Nuclear Instruments and Methods in Physics Research A \textbf{908} 215 (2018)
+  Nuclear Instruments and Methods in Physics Research A \textbf{908} 215 (2018).
 \bibitem{tensorflow}
   A.~Davis, J.~Dean, M.~Devin, S.~Ghemawat, I.~Goodfellow, A.~Harp, G.~Irving,
   M.~Isard, Y.~Jia, R.~Jozefowicz, L.~Kaiser, M.~Kudlur, J.~Levenberg,
@@ -286,7 +278,17 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
   \url{https://tensorflow.org}
 \bibitem{keras}
   F.~Chollet, et al. (2015). \url{https://keras.io}
-
+\bibitem{lenet}
+  Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner
+  Proceedings of the IEEE \textbf{86}, 11, 2278 (1998).
+\bibitem{alexnet}
+  Alex~Krizhevsky, Ilya~Sutskever, and Geoffrey~E.~Hinton
+  Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume \textbf{1}. 1097 (2012).
+%\bibitem{vgg}
+%  K.~Simonyan, and A.~Zisserman
+%  arXiv:1409.1556 [cs] (2014).
+%
+  
 %\bibitem{cp} The abbreviation for JPS Conference Proceedings should be ``JPS Conf. Proc." in the reference list.
 %\bibitem{jpsj} The abbreviation for the Journal of the Physical Society of Japan should be ``J. Phys. Soc. Jpn." in the reference list.
 %\bibitem{ptep} The abbreviation for the Progress of Theoretical and Experimental Physics should be ``Prog. Theor. Exp. Phys." in the reference list.
