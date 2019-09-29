@@ -1,6 +1,7 @@
 TEX=platex
 DVIPDF=dvipdfmx
 MENDEX=mendex
+VIEWER=evince
 BIBTEX=pbibtex
 TARGET=omeg15
 

@@ -23,7 +23,7 @@
 
 \email{doi.takanobu.68x@st.kyoto-u.ac.jp}
 
-\recdate{2019/8/4} % Write received date here
+\recdate{2019/8/31} % Write received date here
 
 \abst{
   TPC を用いた実験では荷電粒子の飛跡を測定することができる。
@@ -36,8 +36,7 @@
   新しく開発した手法を用いることで、従来の方法と比較して高速に解析できるようになった。
 } % Write abstract here
 
-\kword{neural networks, convolutional neural networks,
-  TPC, active target, MAIKo TPC} % Write keywords here
+\kword{neural networks, time projection chamber (TPC), active target, MAIKo TPC} % Write keywords here
 
 \begin{document}
 \maketitle
@@ -59,7 +58,7 @@ MAIKo の概観図を Fig. \ref{fig:MAIKo} に示す。
 TPC は検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
 電子をドリフト電場 (上向き矢印) により読み出し面方向 (下向き) にドリフトさせる
 ことで飛跡を検出する。
-The $\mu$-PIC has of anode strips and cathode strips
+The $\mu$-PIC has 256 of anode strips and cathode strips
 which are arranged orthogonally.
 These strips are aligned at 400-um intervals.
 anode strip は Fig. \ref{fig:MAIKo}のx軸の方向、
@@ -72,7 +71,7 @@ from the drift time of the electrons.
 x, y, zの座標が決定できるので、飛跡を3次元的に再構成することが出来る。
 
 
-この検出器では検出ガスを実験の標的として用いるのでアクティブ標的と呼ばれる。
+MAIKo TPC は検出ガスを散乱の標的として用いるアクティブ標的である。
 アクティブ標的では散乱が検出器内部で起こるため、大立体角で低エネルギー粒子の測定を行うことが可能となる。
 広く標的ガスとして用いられるのは $\rm{He}$ や $\rm{H}_{2}$であるが、
 これらのガスは放電耐性が低いので、
@@ -88,11 +87,11 @@ MAIKo TPC において荷電粒子の飛跡は、
 anode strip に垂直な面に射影された画像 (anode image) と
 cathode strip に垂直な面に射影された画像 (cathode image) の2つの画像として取得される。
 $\mu$-PIC の anode and cathode strips は256 本あり、
-信号波高の時間変化は100 MHz で1024 samples 測定されるので、
-取得される画像の解像度は256 $\times$ 1024 pixels となる。
-Figs. \ref{fig:true} and \ref{fig:false} はRCNPで行われた実験で取得された
+信号波高の時間変化は100 MHz で1,024 samples 測定されるので、
+取得される画像の解像度は256 $\times$ 1,024 pixels となる。
+Figures \ref{fig:true} and \ref{fig:false} はRCNPで行われた実験で取得された
 データの一例である。
-Fig. \ref{fig:true} は$\rm{He}$ガスと散乱した事象、
+Figure \ref{fig:true} は$\rm{He}$ガスと散乱した事象、
 Fig. \ref{fig:false} はクエンチングガスと散乱した事象である。
 
 散乱実験では、散乱粒子のエネルギーと放出角度を決定する必要がある。
@@ -121,17 +120,17 @@ Fig. \ref{fig:false} はクエンチングガスと散乱した事象である�
   \end{minipage}
 \end{figure}
 
-Figs. \ref{fig:true} and \ref{fig:false} のような画像データに対して、
+Figures \ref{fig:true} and \ref{fig:false} のような画像データに対して、
 事象の選別や飛跡情報の抽出には多くの労力が必要となる。
 そこで、我々は近年画像認識において多くの成果を出している
 ニューラルネットワークを用いることで、
 より高速な解析を行うことが出来る解析方法の開発を行った。
 
 \section{Conventional analysis method}
-従来は、得られたデータから背景事象の除去を行うのに、
+従来は、得られたデータから背景事象の除去を行うために、
 画像中の直線を抽出する手法の１つである
 Hough 変換を用いたアルゴリズムによって行ってきた。
-In the Hough transformation, a hit pixel of the image at $(x_{i}, y_{i})$ is transformed into
+In the Hough transformation, a hit pixel in the image at $(x_{i}, y_{i})$ is transformed into
 a curved line in the $(\theta, r)$ parameter space (Hough space)
 according to Eq. (\ref{eq:real2hough}).
 \begin{equation}
@@ -158,9 +157,9 @@ $\rm{He}$との散乱事象を選別することが出来る。
 そのため、パラメータの最適化や画像識別に多くの時間を必要とする。
 
 パラメータの最適化には100 CPU を使用して約１日かかり、
-その後の識別には１ eventあたり１秒かかった。
+その後の画像識別には1 eventあたり１秒かかった。
 この手法による識別能力の評価には、画像データを人間が目で見て
-散乱事象もしくは背景事象と判断した3000イベントを評価用データとして用いて行った。
+散乱事象もしくは背景事象と判断した3,000イベントを評価用データとして用いて行った。
 全事象のうち、散乱事象または背景事象の区別を正しく判断することが
 出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
@@ -207,7 +206,7 @@ CNN とはネットワーク内に畳み込み層を有するネットワーク�
 事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
 その事象が標的と散乱した事象である確率を出力する。
 出力された確率が50\%以上である場合にその事象を標的と散乱した事象であるとした。
-anode image と cathode image では異なる特徴を持つため、
+anode image と cathode image では飛跡が異なる特徴を持つため、
 ２つの入力が別れた構造を持つネットワークを構築した。
 人間が判断したデータを用いて、学習および評価を行った。
 学習には2,700 events、評価には300 events を使用した。
@@ -242,6 +241,7 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 
 座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
 学習にはおよそ270分、その後の推測には1,554 events に対しておよそ2秒かかった。
+典型的なイベントにおいて、
 学習後にニューラルネットワークが予測した座標と従来手法によって決定した座標の比較をFig. \ref{fig:result_detection} に示す。
 学習データの散乱が起こった点を円、反跳粒子が停止した点を三角で示す。
 学習後に推論によって決定した散乱が起こった点を四角、反跳粒子が停止した点をひし形で示す。
@@ -253,7 +253,7 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 
 
 \section{Conclusion}
-従来のHough 変換を用いた画像識別アルゴリズムに変わる、
+従来のHough 変換を用いた画像識別アルゴリズムに替わる、
 ニューラルネットワークを用いた新手法の開発を行った。
 新手法は従来のものよりも高速かつ高精度に事象の選別を行うことが可能となった。
 また、飛跡情報の抽出については従来の精度を保ちつつ、高速に行うことが可能となった。
@@ -261,13 +261,13 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 
 \begin{thebibliography}{9}
 \bibitem{mupic}
-  A.~Ochi, T.~Nagayoshi, T.~Tanimori, T.~Nagae, and M.~Nakamura
-  Nuclear Instruments and Methods in Physics Research A \textbf{471} 264 (2001)
+  A.~Ochi, T.~Nagayoshi, T.~Tanimori, T.~Nagae, and M.~Nakamura,
+  Nucl. Instrum. Methods Phys. Res. A \textbf{471}, 264 (2001).
 \bibitem{MAIKo}
   T.~Furuno, T.~Kawabata, H.~Ong, S.~Adachi, Y.~Ayyad, T.~Baba, Y.~Fujikawa, T.~Hashimoto, K.~Inaba, Y.~Ishii,
   S.~Kabuki, H.~Kubo, Y.~Matsuda, Y.~Matsuoka, T.~Mizumoto, T.~Morimoto, M.~Murata, T.~Sawano, T.~Suzuki, A.~Takada,
-  J.~Tanaka, I.~Tanihata, T.~Tanimori, D.~Tran, M-, Tsumura, and H.~Watanabe
-  Nuclear Instruments and Methods in Physics Research A \textbf{908} 215 (2018).
+  J.~Tanaka, I.~Tanihata, T.~Tanimori, D.~Tran, M-, Tsumura, and H.~Watanabe,
+  Nucl. Instrum. Methods Phys. Res. A \textbf{908}, 215 (2018).
 \bibitem{tensorflow}
   A.~Davis, J.~Dean, M.~Devin, S.~Ghemawat, I.~Goodfellow, A.~Harp, G.~Irving,
   M.~Isard, Y.~Jia, R.~Jozefowicz, L.~Kaiser, M.~Kudlur, J.~Levenberg,
@@ -277,13 +277,13 @@ TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
   X.~Zheng, (2015).
   \url{https://tensorflow.org}
 \bibitem{keras}
-  F.~Chollet, et al. (2015). \url{https://keras.io}
+  F.~Chollet, et al., (2015). \url{https://keras.io}
 \bibitem{lenet}
-  Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner
+  Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner,
   Proceedings of the IEEE \textbf{86}, 11, 2278 (1998).
 \bibitem{alexnet}
-  Alex~Krizhevsky, Ilya~Sutskever, and Geoffrey~E.~Hinton
-  Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume \textbf{1}. 1097 (2012).
+  Alex~Krizhevsky, Ilya~Sutskever, and Geoffrey~E.~Hinton,
+  Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume \textbf{1}, 1097 (2012).
 %\bibitem{vgg}
 %  K.~Simonyan, and A.~Zisserman
 %  arXiv:1409.1556 [cs] (2014).
