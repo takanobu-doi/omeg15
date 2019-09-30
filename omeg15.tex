@@ -26,8 +26,8 @@
 \recdate{2019/8/31} % Write received date here
 
 \abst{
-  In the experiments with TPC, we can detect trajectories.
-  A 3-dimensional trajectory is projected into 2-dimensional planes.
+  In the experiments with TPC, we can detect tracks.
+  A 3-dimensional track is projected into 2-dimensional planes.
   It is necessary to analyze 2-dimensional image data from TPC.
   Conventionally, the analysis is used Hough transformation.
   This analysis requires a lot of efforts.
@@ -59,59 +59,98 @@
   \label{fig:MAIKo}
   \vspace{0zw}
 \end{wrapfigure}
-近年、荷電粒子の飛跡を測定する検出器としてTime Projection Chamber (TPC) が
-広く用いられている。
-我々は不安定核実験のためにMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic}を用いた
-Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo}を開発した。
-MAIKo の概観図を Fig. \ref{fig:MAIKo} に示す。
-TPC は検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
-電子をドリフト電場 (上向き矢印) により読み出し面方向 (下向き) にドリフトさせる
-ことで飛跡を検出する。
+These days, Time Projection Chamber (TPC) is widely used to detect tracks of charged particles.
+We developed Mu-PIC based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo}
+using Micro Pixel Chamber ($\mu$-PIC)~\cite{mupic} for unstable nuclei experiments.
+Figure \ref{fig:MAIKo} shows the overview of MAIKo TPC.
+A detection gas is filled in TPC.
+When charged particles pass through the gas, electrons emitted.
+The electrons are drifted in the direction (downer arrow) of the readout surface by a drift electric field (upper arrow)
+and the tracks are detected.
+%
+%近年、荷電粒子の飛跡を測定する検出器としてTime Projection Chamber (TPC) が
+%広く用いられている。
+%我々は不安定核実験のためにMicro Pixel Chamber ($\mu$-PIC)~\cite{mupic}を用いた
+%Mu-Pic based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo}を開発した。
+%MAIKo の概観図を Fig. \ref{fig:MAIKo} に示す。
+%TPC は検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
+%電子をドリフト電場 (上向き矢印) により読み出し面方向 (下向き) にドリフトさせる
+%ことで飛跡を検出する。
 The $\mu$-PIC has 256 of anode strips and cathode strips
 which are arranged orthogonally.
 These strips are aligned at 400-um intervals.
-anode strip は Fig. \ref{fig:MAIKo}のx軸の方向、
-cathode strip は z軸の方向と平行である。
+Anode strips are parallel to x-axis in Fig. \ref{fig:MAIKo} and %は Fig. \ref{fig:MAIKo}のx軸の方向、
+cathode strips are parallel to z-axis.%は z軸の方向と平行である。
 The signals induced by the drifted electron are read out through the anode and 
 cathode strips which provide the 2-dimensional position (x-axis and z-axis) 
 of the particle tracks.
 The vertical position (y-axis) of the tracks are determined 
 from the drift time of the electrons.
-x, y, zの座標が決定できるので、飛跡を3次元的に再構成することが出来る。
+The 3-dimensional tracks are reconstructed from x, y, z-coordinates.
+%x, y, zの座標が決定できるので、飛跡を3次元的に再構成することが出来る。
 
+MAIKo TPC is the active target that a detection gas is used for a target gas.
+By using the active target, incident particles scatter with target particles in the detector.
+It is possible to detect low energy particles with a large solid angle.
+$\rm{He}$ or $\rm{H}_{2}$ that is widely used for a target gas
+has low discharge resistance.
+Normally, $\rm{CO}_{2}$ or iso-butane that has high discharge resistance is used for a quench gas and
+mixed with target gases.
+The events that incident particles are scattered with quench gases are background events.
+The elastic and inelastic alpha scatterings on ${}^{10}\rm{C}$ were measured with MAIKo TPC
+at Research Center for Nuclear Physics, Osaka University (RCNP).
+In this experiment, $\rm{He}$ (96\%) was used as target and $\rm{CO}_{2}$ (4\%) was used as quench gas.
+%MAIKo TPC は検出ガスを散乱の標的として用いるアクティブ標的である。
+%アクティブ標的では散乱が検出器内部で起こるため、大立体角で低エネルギー粒子の測定を行うことが可能となる。
+%広く標的ガスとして用いられるのは $\rm{He}$ や $\rm{H}_{2}$であるが、
+%これらのガスは放電耐性が低いので、
+%通常は放電耐性の高い $\rm{CO}_{2}$ やイソブタンをクエンチングガスとして
+%混合させてTPC を運用する。
+%このとき、クエンチングガスからの散乱は背景事象となる。
+%近年、大阪大学核物理研究センター (RCNP) において、
+%MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測定が初めて行われた。
+%この実験では標的ガスである$\rm{He}$ (96\%)に、$\rm{CO}_{2}$ (4\%)をクエンチングガスとして
+%混合して測定を行った。
 
-MAIKo TPC は検出ガスを散乱の標的として用いるアクティブ標的である。
-アクティブ標的では散乱が検出器内部で起こるため、大立体角で低エネルギー粒子の測定を行うことが可能となる。
-広く標的ガスとして用いられるのは $\rm{He}$ や $\rm{H}_{2}$であるが、
-これらのガスは放電耐性が低いので、
-通常は放電耐性の高い $\rm{CO}_{2}$ やイソブタンをクエンチングガスとして
-混合させてTPC を運用する。
-このとき、クエンチングガスからの散乱は背景事象となる。
-近年、大阪大学核物理研究センター (RCNP) において、
-MAIKo TPC を用いた${}^{10}\rm{C}$と${}^{4}\rm{He}$の非弾性散乱の測定が初めて行われた。
-この実験では標的ガスである$\rm{He}$ (96\%)に、$\rm{CO}_{2}$ (4\%)をクエンチングガスとして
-混合して測定を行った。
+The track of charged particle is projected into a plane that is perpendicular to anode strips (anode image) and
+a plane that is perpendicular to cathode strips (cathode image).
+MAIKo TPC outputs two images by one event.
+$\mu$-PIC has 256 anode strips and 256 cathode strips,
+and measure waveform by 1,024 samples in 100 MHz.
+The resolution of an image from MAIKo TPC is 256 $\times$ 1,024.
+Figures \ref{fig:true} and \ref{fig:false} are examples of measured data at RCNP.
+Figure \ref{fig:true} is the event that a incident particle scatter with $\rm{He}$ and
+Fig. \ref{fig:false} is the event that a incident particle scatter with quench gas.
+%MAIKo TPC において荷電粒子の飛跡は、
+%anode strip に垂直な面に射影された画像 (anode image) と
+%cathode strip に垂直な面に射影された画像 (cathode image) の2つの画像として取得される。
+%$\mu$-PIC の anode and cathode strips は256 本あり、
+%信号波高の時間変化は100 MHz で1,024 samples 測定されるので、
+%取得される画像の解像度は256 $\times$ 1,024 pixels となる。
+%Figures \ref{fig:true} and \ref{fig:false} はRCNPで行われた実験で取得された
+%データの一例である。
+%Figure \ref{fig:true} は$\rm{He}$ガスと散乱した事象、
+%Fig. \ref{fig:false} はクエンチングガスと散乱した事象である。
 
-MAIKo TPC において荷電粒子の飛跡は、
-anode strip に垂直な面に射影された画像 (anode image) と
-cathode strip に垂直な面に射影された画像 (cathode image) の2つの画像として取得される。
-$\mu$-PIC の anode and cathode strips は256 本あり、
-信号波高の時間変化は100 MHz で1,024 samples 測定されるので、
-取得される画像の解像度は256 $\times$ 1,024 pixels となる。
-Figures \ref{fig:true} and \ref{fig:false} はRCNPで行われた実験で取得された
-データの一例である。
-Figure \ref{fig:true} は$\rm{He}$ガスと散乱した事象、
-Fig. \ref{fig:false} はクエンチングガスと散乱した事象である。
-
-散乱実験では、散乱粒子のエネルギーと放出角度を決定する必要がある。
-散乱粒子のエネルギーは散乱粒子がガス中で停止するまでの飛跡の長さから、
-放出角度は散乱前後の粒子の飛跡から決定することが出来る。
-飛跡情報の抽出を行うためには
+In a scattering experiment, it is necessary to determine the energy and emission angle of the scattering particles.
+The energy is determined from the length of a track.
+The emission angle is determined from tracks of the incident particle and the scattering particle.
+To extract the information of tracks, there are two steps.
 \begin{itemize}
-\item 標的との散乱事象と背景事象との選別
-\item 飛跡の長さや方向などの物理的情報の抽出
+\item
+  Select events scattered with target and background events.
+\item
+  Extract the length and the emission angle from images.
 \end{itemize}
-の大きくわけて2つの解析が必要になる。
+%散乱実験では、散乱粒子のエネルギーと放出角度を決定する必要がある。
+%散乱粒子のエネルギーは散乱粒子がガス中で停止するまでの飛跡の長さから、
+%放出角度は散乱前後の粒子の飛跡から決定することが出来る。
+%飛跡情報の抽出を行うためには
+%\begin{itemize}
+%\item 標的との散乱事象と背景事象との選別
+%\item 飛跡の長さや方向などの物理的情報の抽出
+%\end{itemize}
+%の大きくわけて2つの解析が必要になる。
 
 \begin{figure}
   \centering
@@ -129,11 +168,13 @@ Fig. \ref{fig:false} はクエンチングガスと散乱した事象である�
   \end{minipage}
 \end{figure}
 
-Figures \ref{fig:true} and \ref{fig:false} のような画像データに対して、
-事象の選別や飛跡情報の抽出には多くの労力が必要となる。
-そこで、我々は近年画像認識において多くの成果を出している
-ニューラルネットワークを用いることで、
-より高速な解析を行うことが出来る解析方法の開発を行った。
+There are a lot of efforts to select events and extract information of tracks.
+So, we developed faster analysis method using neural networks that are attracted attention in image recognition.
+%Figures \ref{fig:true} and \ref{fig:false} のような画像データに対して、
+%事象の選別や飛跡情報の抽出には多くの労力が必要となる。
+%そこで、我々は近年画像認識において多くの成果を出している
+%ニューラルネットワークを用いることで、
+%より高速な解析を行うことが出来る解析方法の開発を行った。
 
 \section{Conventional analysis method}
 従来は、得られたデータから背景事象の除去を行うために、
