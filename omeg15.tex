@@ -177,8 +177,10 @@ So, we developed faster analysis method using neural networks that are attracted
 %より高速な解析を行うことが出来る解析方法の開発を行った。
 
 \section{Conventional analysis method}
-従来は、得られたデータから背景事象の除去を行うために、
-画像中の直線を抽出する手法の１つである
+Conventionaly, the Hough transformation was used in order to remove background from data.
+The Hough transformation is one of methods to find lines from a image.
+%従来は、得られたデータから背景事象の除去を行うために、
+%画像中の直線を抽出する手法の１つである
 Hough 変換を用いたアルゴリズムによって行ってきた。
 In the Hough transformation, a hit pixel in the image at $(x_{i}, y_{i})$ is transformed into
 a curved line in the $(\theta, r)$ parameter space (Hough space)
@@ -198,33 +200,49 @@ When the pixels in the anode or cathode image lie on a straight line,
 their transformed curves intersect at one point at $(\theta_{j}, r_{j})$ in the Hough space.
 Thus, the intersection point in the Hough space gives the particle track according to Eq. (\ref{eq:hough2real}).
 
-抽出した直線の長さや角度、本数、配置に対して多くの条件を課すことによって、
-$\rm{He}$との散乱事象を選別することが出来る。
-さらに、選別された事象における$\rm{He}$の飛跡の長さや角度から、
-散乱角とエネルギーを決定することが出来る。
-しかし、事象選別に必要な条件には複雑な分岐を必要とし、
-多くのパラメータを導入しなければならない。
-そのため、パラメータの最適化や画像識別に多くの時間を必要とする。
+It is possible to select the events scattered with $\rm{He}$ by using conditions of
+the length, the angle, the number, and the location of tracks.
+The energy and the scattering angle is determined from them.
+This method using the Hough transfomation needs complicated condition branches with many parameters.
+It needs too many times to tune the parameters.
+%抽出した直線の長さや角度、本数、配置に対して多くの条件を課すことによって、
+%$\rm{He}$との散乱事象を選別することが出来る。
+%さらに、選別された事象における$\rm{He}$の飛跡の長さや角度から、
+%散乱角とエネルギーを決定することが出来る。
+%しかし、事象選別に必要な条件には複雑な分岐を必要とし、
+%多くのパラメータを導入しなければならない。
+%そのため、パラメータの最適化や画像識別に多くの時間を必要とする。
 
-パラメータの最適化には100 CPU を使用して約１日かかり、
-その後の画像識別には1 eventあたり１秒かかった。
-この手法による識別能力の評価には、画像データを人間が目で見て
-散乱事象もしくは背景事象と判断した3,000イベントを評価用データとして用いて行った。
-全事象のうち、散乱事象または背景事象の区別を正しく判断することが
-出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
+It takes about 1 day to tune the parameters using 100 CPUs.
+It takes about 1 second by 1 event to process the images after the parameter tuning.
+The selection ability is evaluated by 3000 data that is judged by human eyes.
+The accuracy, that is ratio of judgement correctly, is 89\%.
+%パラメータの最適化には100 CPU を使用して約１日かかり、
+%その後の画像識別には1 eventあたり１秒かかった。
+%この手法による識別能力の評価には、画像データを人間が目で見て
+%散乱事象もしくは背景事象と判断した3,000イベントを評価用データとして用いて行った。
+%全事象のうち、散乱事象または背景事象の区別を正しく判断することが
+%出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
 \section{New analysis method}
+There is a problem that the conventional method needs complicated condition branches and much machine power.
+We develop new method using neural networks that are recently attracting attention for image recognition.
+Using neural networks, it is may possible to recognize images with not using complicated condition branches,
+but handleing many signatures.
+Onec a neural network trained, it is able to recognize images fast.
+Using features of neural networks, it is expected to realize higher accuracy and
+faster recognition speed than the conventional method.
 
-従来手法では識別に複雑な分岐条件や多くの計算機パワー
-が必要になるという問題点があった。
-そこで、我々は近年注目されているニューラルネットワークを用いることで、
-これらの問題点を克服する新しい解析方法の開発を試みた。
-ニューラルネットワークを用いることで、複雑な条件分岐を導入することなく、
-直線の位置、角度などの従来の解析手法ではまとめて扱うことの難しい
-多くの特徴量を同時に考慮した画像識別が可能になるかもしれない。
-また、ニューラルネットワークは一度構築するとその後は短時間で画像識別を行うことができる。
-このようなニューラルネットワークの特徴を活かすことで、
-従来のアルゴリズムでは実現が難しかった高い精度と短い識別時間を実現することが期待される。
+%従来手法では識別に複雑な分岐条件や多くの計算機パワー
+%が必要になるという問題点があった。
+%そこで、我々は近年注目されているニューラルネットワークを用いることで、
+%これらの問題点を克服する新しい解析方法の開発を試みた。
+%ニューラルネットワークを用いることで、複雑な条件分岐を導入することなく、
+%直線の位置、角度などの従来の解析手法ではまとめて扱うことの難しい
+%多くの特徴量を同時に考慮した画像識別が可能になるかもしれない。
+%また、ニューラルネットワークは一度構築するとその後は短時間で画像識別を行うことができる。
+%このようなニューラルネットワークの特徴を活かすことで、
+%従来のアルゴリズムでは実現が難しかった高い精度と短い識別時間を実現することが期待される。
 
 \vspace{-2zw}
 \begin{figure}
@@ -232,82 +250,122 @@ $\rm{He}$との散乱事象を選別することが出来る。
   \begin{minipage}{0.4\columnwidth}
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/event_selection.eps}
-    \caption{データの選別を行うためのニューラルネットワーク}
+%    \caption{データの選別を行うためのニューラルネットワーク}
+    \caption{This neural network selects events scattered with a target.}
     \label{fig:selection}
   \end{minipage}
   \hfill
   \begin{minipage}{0.4\columnwidth}
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/point_detection.eps}
-    \caption{画像から情報を抽出するためのニューラルネットワーク}
+%    \caption{画像から情報を抽出するためのニューラルネットワーク}
+    \caption{This neural network extracts imformation of tracks from images.}
     \label{fig:extraction}
   \end{minipage}
 \end{figure}
 
-MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
-Convolutional Neural Network (CNN)~\cite{lenet,alexnet} を用いた。
-CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
-解析には事象の選別と飛跡情報の抽出の２つの段階があるため、
-２種類のニューラルネットワークを用いて解析を行った。
-事象の選別を行うニューラルネットワークと
-画像から飛跡情報を抽出するニューラルネットワークの構造を
-それぞれFigs. \ref{fig:selection} and \ref{fig:extraction}に示す。
+We use Convolutional Neural Network (CNN) that is useful for image recognition,
+because the data from MAIKo TPC are images.
+CNN is the network that has convolutional layers.
+The analysis has two steps that are event selection and track extraction.
+We use two network to analyze.
+Figures \ref{fig:selection} and \ref{fig:extraction} show
+the network that selects events and that extracts imformation of tracks.
+%MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
+%Convolutional Neural Network (CNN)~\cite{lenet,alexnet} を用いた。
+%CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
+%解析には事象の選別と飛跡情報の抽出の２つの段階があるため、
+%２種類のニューラルネットワークを用いて解析を行った。
+%事象の選別を行うニューラルネットワークと
+%画像から飛跡情報を抽出するニューラルネットワークの構造を
+%それぞれFigs. \ref{fig:selection} and \ref{fig:extraction}に示す。
 
-事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
-その事象が標的と散乱した事象である確率を出力する。
-出力された確率が50\%以上である場合にその事象を標的と散乱した事象であるとした。
-anode image と cathode image では飛跡が異なる特徴を持つため、
-２つの入力が別れた構造を持つネットワークを構築した。
-人間が判断したデータを用いて、学習および評価を行った。
-学習には2,700 events、評価には300 events を使用した。
+The neural network for event selection is inputed pair of images from MAIKo TPC and
+outputs probability of event scattered with a target.
+If the probability is bigger than 50\%, the event is judged scattered with a target.
+Because the anode image and cathode image has different features,
+the network has two branches.
+This network trained and was evaluated with the data that is judged by eye-scan.
+2,700 events for training and 300 events for evaluation are used.
+%事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
+%その事象が標的と散乱した事象である確率を出力する。
+%出力された確率が50\%以上である場合にその事象を標的と散乱した事象であるとした。
+%anode image と cathode image では飛跡が異なる特徴を持つため、
+%２つの入力が別れた構造を持つネットワークを構築した。
+%人間が判断したデータを用いて、学習および評価を行った。
+%学習には2,700 events、評価には300 events を使用した。
 
-飛跡情報を抽出するためのネットワークには、
-事象選別のときと同様に MAIKo TPC から得られる２つの飛跡画像を入力し、
-散乱が起こった座標と反跳した${}^{4}\rm{He}$が停止した座標を出力させる。
-%学習を効率的に行うために、出力される座標は各軸が0--1の範囲になるように規格化した座標系で得られる。
-%このネットワークは２１層からなり、２入力１出力の形をしている。
-教師データには従来手法で決定した座標を用いた。
-学習には3,012 events、評価には1,554 events を使用した。
+The neural network for track extraction is also inputed pair of images from MAIKo TPC and
+outputs coordinates of points at that a incident particle scattered and at that recoil ${}^{4}\rm{He}$ stopped.
+This network trained and was evaluated with the data that is determined by the conventional method.
+3,012 events for training and 1,554 events for evaluation are uesd.
+%飛跡情報を抽出するためのネットワークには、
+%事象選別のときと同様に MAIKo TPC から得られる２つの飛跡画像を入力し、
+%散乱が起こった座標と反跳した${}^{4}\rm{He}$が停止した座標を出力させる。
+%%%%学習を効率的に行うために、出力される座標は各軸が0--1の範囲になるように規格化した座標系で得られる。
+%%%%このネットワークは２１層からなり、２入力１出力の形をしている。
+%教師データには従来手法で決定した座標を用いた。
+%学習には3,012 events、評価には1,554 events を使用した。
 
-学習環境はIntel Core i7、Nvidia GeForce GTX 1080Ti、Ubuntu 18.04 LTS、
-TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
+We used Intel Core i7, Nvidia GeForce GTX 1080Ti, Ubuntu 18.04 LTS, and
+TensorFlow~\cite{tensorflow}+Keras~\cite{keras}.
+%学習環境はIntel Core i7、Nvidia GeForce GTX 1080Ti、Ubuntu 18.04 LTS、
+%TensorFlow~\cite{tensorflow}+Keras~\cite{keras} を用いた。
 
 \section{Result}
 \begin{wrapfigure}{r}{25zw}
   \vspace{-6zw}
   \centering
   \includegraphics[clip, width=25zw]{eps/compare_mono.eps}
-  \caption{ニューラルネットワークによって決定した座標とHough変換によって決定した座標との比較}
+%  \caption{ニューラルネットワークによって決定した座標とHough変換によって決定した座標との比較}
+  \caption{This figure shows comparision of coordinates determined by the conventional method and the neural network.}
   \label{fig:result_detection}
   \vspace{-2zw}
 \end{wrapfigure}
 
-事象選別のためのニューラルネットワークは、2,700 events に対して200 回学習を行った。
-学習にはおよそ26分、その後の推測には300 events に対しておよそ1秒かかった。
-従来手法の評価に用いたのと同じ実験データのうち、300 eventsを用いて評価を行った結果、
-正解率は96\%であった。
-従来の手法と比較して高精度に事象選別を行うことが可能となった。
-また、パラメータチューニングおよび選別に要する時間も大きく短縮することができた。
+The neural network for event selection trained 200 times for 2,700 events.
+It took about 26 minutes for training and about 1 second to process for 300 events.
+The accuracy evaluated by 300 events that are used for evaluation of the conventional method
+is 96\%.
+New method is able to select events in higher accuracy that the conventional method.
+It takes shorter time to tune parameters and to process than the conventional method.
+%事象選別のためのニューラルネットワークは、2,700 events に対して200 回学習を行った。
+%学習にはおよそ26分、その後の推測には300 events に対しておよそ1秒かかった。
+%従来手法の評価に用いたのと同じ実験データのうち、300 eventsを用いて評価を行った結果、
+%正解率は96\%であった。
+%従来の手法と比較して高精度に事象選別を行うことが可能となった。
+%また、パラメータチューニングおよび選別に要する時間も大きく短縮することができた。
 
-座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
-学習にはおよそ270分、その後の推測には1,554 events に対しておよそ2秒かかった。
-典型的なイベントにおいて、
-学習後にニューラルネットワークが予測した座標と従来手法によって決定した座標の比較をFig. \ref{fig:result_detection} に示す。
-学習データの散乱が起こった点を円、反跳粒子が停止した点を三角で示す。
-学習後に推論によって決定した散乱が起こった点を四角、反跳粒子が停止した点をひし形で示す。
-従来手法とニューラルネットワークを用いた手法のそれぞれで決定した座標は、
-ほぼ一致している。
-1,554 events に対して学習に用いた点とニューラルネットワークを用いて決定した点のズレは、
-平均二乗誤差で約4 mm となった。
-従来の手法と比較してパラメータチューニングおよび情報の抽出にかかる時間を短縮することができた。
+The neural network for track extraction trained 500 times for 3,012 events.
+It took about 270 minutes for training and about 2 seconds to process for 1,554 events.
+Comparision of coordinates determined by the neural network and the conventional method is shown in Fig. \ref{fig:result_detection}
+with a tipical image.
+The circle point and the triangle point is a scattering point and a stopping point determined by the conventinal method.
+The square point and the rhombus point is a scattering point and a stopping point determined by the neural network.
+The difference between points of conventinal method and neural network is about 4 mm in root mean squared error for 1,554 events.
+It takes shorter time to tune parameters and process than the conventional method.
+%座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
+%学習にはおよそ270分、その後の推測には1,554 events に対しておよそ2秒かかった。
+%典型的なイベントにおいて、
+%学習後にニューラルネットワークが予測した座標と従来手法によって決定した座標の比較をFig. \ref{fig:result_detection} に示す。
+%学習データの散乱が起こった点を円、反跳粒子が停止した点を三角で示す。
+%学習後に推論によって決定した散乱が起こった点を四角、反跳粒子が停止した点をひし形で示す。
+%従来手法とニューラルネットワークを用いた手法のそれぞれで決定した座標は、
+%ほぼ一致している。
+%1,554 events に対して学習に用いた点とニューラルネットワークを用いて決定した点のズレは、
+%平均二乗誤差で約4 mm となった。
+%従来の手法と比較してパラメータチューニングおよび情報の抽出にかかる時間を短縮することができた。
 
 
 \section{Conclusion}
-従来のHough 変換を用いた画像識別アルゴリズムに替わる、
-ニューラルネットワークを用いた新手法の開発を行った。
-新手法は従来のものよりも高速かつ高精度に事象の選別を行うことが可能となった。
-また、飛跡情報の抽出については従来の精度を保ちつつ、高速に行うことが可能となった。
-ニューラルネットワークを用いた解析手法はTPC の解析に有用であることがわかった。
+We developped the new method with neural networks to replace the conventional method with Hough transformation.
+The new method selects and extracts in high accuracy and processes faster than the conventional method.
+Neural networks are usefull to analyze data of TPC.
+%従来のHough 変換を用いた画像識別アルゴリズムに替わる、
+%ニューラルネットワークを用いた新手法の開発を行った。
+%新手法は従来のものよりも高速かつ高精度に事象の選別を行うことが可能となった。
+%また、飛跡情報の抽出については従来の精度を保ちつつ、高速に行うことが可能となった。
+%ニューラルネットワークを用いた解析手法はTPC の解析に有用であることがわかった。
 
 \begin{thebibliography}{9}
 \bibitem{mupic}
