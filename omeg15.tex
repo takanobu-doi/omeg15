@@ -31,8 +31,8 @@
   It is necessary to analyze 2-dimensional image data from TPC.
   Conventionally, the analysis is used Hough transformation.
   This analysis requires a lot of efforts.
-  These days, neural networks are attracting attention.
-  In this work, we develop new analysis method using neural networks.
+  These days, neural networks are attracting attention for image recognition.
+  In this work, we developed new analysis method using neural networks.
   By using new method, analysis can be performed faster than the conventional method.
 %
 %  TPC を用いた実験では荷電粒子の飛跡を測定することができる。
@@ -55,7 +55,7 @@
   \vspace{0zw}
   \centering
   \includegraphics[clip, width=16zw]{eps/MAIKo.eps}
-  \caption{MAIKo TPC の概観}
+  \caption{This shows an overview of MAIKo TPC.}
   \label{fig:MAIKo}
   \vspace{0zw}
 \end{wrapfigure}
@@ -63,10 +63,10 @@ These days, Time Projection Chamber (TPC) is widely used to detect tracks of cha
 We developed Mu-PIC based Active target for Inverse Kinematics . (MAIKo) TPC~\cite{MAIKo}
 using Micro Pixel Chamber ($\mu$-PIC)~\cite{mupic} for unstable nuclei experiments.
 Figure \ref{fig:MAIKo} shows the overview of MAIKo TPC.
-A detection gas is filled in TPC.
+Detection gas is filled in TPC.
 When charged particles pass through the gas, electrons emitted.
-The electrons are drifted in the direction (downer arrow) of the readout surface by a drift electric field (upper arrow)
-and the tracks are detected.
+These electrons are drifted in the direction for the readout surface(downer arrow)
+by a drift electric field (upper arrow) and the tracks are detected.
 %
 %近年、荷電粒子の飛跡を測定する検出器としてTime Projection Chamber (TPC) が
 %広く用いられている。
@@ -78,28 +78,28 @@ and the tracks are detected.
 %ことで飛跡を検出する。
 The $\mu$-PIC has 256 of anode strips and cathode strips
 which are arranged orthogonally.
-These strips are aligned at 400-um intervals.
+These strips are aligned at 400-$\rm{\mu m}$ intervals.
 Anode strips are parallel to x-axis in Fig. \ref{fig:MAIKo} and %は Fig. \ref{fig:MAIKo}のx軸の方向、
 cathode strips are parallel to z-axis.%は z軸の方向と平行である。
-The signals induced by the drifted electron are read out through the anode and 
+The signals induced by the drifted electrons are read out through the anode and 
 cathode strips which provide the 2-dimensional position (x-axis and z-axis) 
 of the particle tracks.
-The vertical position (y-axis) of the tracks are determined 
+The vertical position (y-axis) of the tracks is determined 
 from the drift time of the electrons.
 The 3-dimensional tracks are reconstructed from x, y, z-coordinates.
 %x, y, zの座標が決定できるので、飛跡を3次元的に再構成することが出来る。
 
 MAIKo TPC is the active target that a detection gas is used for a target gas.
 By using the active target, incident particles scatter with target particles in the detector.
-It is possible to detect low energy particles with a large solid angle.
+It is possible to detect low energy particles in a large solid angle.
 $\rm{He}$ or $\rm{H}_{2}$ that is widely used for a target gas
 has low discharge resistance.
 Normally, $\rm{CO}_{2}$ or iso-butane that has high discharge resistance is used for a quench gas and
-mixed with target gases.
-The events that incident particles are scattered with quench gases are background events.
-The elastic and inelastic alpha scatterings on ${}^{10}\rm{C}$ were measured with MAIKo TPC
+mixed with a target gas.
+The events that incident particles are scattered with quench gas become background events.
+The elastic and inelastic alpha scattering on ${}^{10}\rm{C}$ were measured with MAIKo TPC
 at Research Center for Nuclear Physics, Osaka University (RCNP).
-In this experiment, $\rm{He}$ (96\%) was used as target and $\rm{CO}_{2}$ (4\%) was used as quench gas.
+In this experiment, $\rm{He}$ (96\%) was used as target gas and $\rm{CO}_{2}$ (4\%) was used as quench gas.
 %MAIKo TPC は検出ガスを散乱の標的として用いるアクティブ標的である。
 %アクティブ標的では散乱が検出器内部で起こるため、大立体角で低エネルギー粒子の測定を行うことが可能となる。
 %広く標的ガスとして用いられるのは $\rm{He}$ や $\rm{H}_{2}$であるが、
@@ -119,8 +119,8 @@ $\mu$-PIC has 256 anode strips and 256 cathode strips,
 and measure waveform by 1,024 samples in 100 MHz.
 The resolution of an image from MAIKo TPC is 256 $\times$ 1,024.
 Figures \ref{fig:true} and \ref{fig:false} are examples of measured data at RCNP.
-Figure \ref{fig:true} is the event that a incident particle scatter with $\rm{He}$ and
-Fig. \ref{fig:false} is the event that a incident particle scatter with quench gas.
+Figure \ref{fig:true} shows the event that a incident particle scattered with $\rm{He}$ and
+Fig. \ref{fig:false} shows the event that a incident particle scattered with quench gas.
 %MAIKo TPC において荷電粒子の飛跡は、
 %anode strip に垂直な面に射影された画像 (anode image) と
 %cathode strip に垂直な面に射影された画像 (cathode image) の2つの画像として取得される。
@@ -134,7 +134,7 @@ Fig. \ref{fig:false} is the event that a incident particle scatter with quench g
 
 In a scattering experiment, it is necessary to determine the energy and emission angle of the scattering particles.
 The energy is determined from the length of a track.
-The emission angle is determined from tracks of the incident particle and the scattering particle.
+The emission angle is determined from open angle of the incident particle and the scattering particle.
 To extract the information of tracks, there are two steps.
 \begin{itemize}
 \item
@@ -154,16 +154,17 @@ To extract the information of tracks, there are two steps.
 
 \begin{figure}
   \centering
-  \begin{minipage}{0.4\columnwidth}
+  \begin{minipage}{0.45\columnwidth}
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/true.eps}
-    \caption{${}^{10}\rm{C}+{}^{4}\rm{He}$の散乱事象}
+    \caption{An incident ${}^{10}\rm{C}$ scattered with ${}^{4}\rm{He}$.}
     \label{fig:true}
   \end{minipage}
-  \begin{minipage}{0.4\columnwidth}
+  \hfill
+  \begin{minipage}{0.45\columnwidth}
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/false.eps}
-    \caption{${}^{10}\rm{C}$とクエンチガスとの散乱事象}
+    \caption{An incident${}^{10}\rm{C}$ scattered with quench gas.}
     \label{fig:false}
   \end{minipage}
 \end{figure}
@@ -177,14 +178,14 @@ So, we developed faster analysis method using neural networks that are attracted
 %より高速な解析を行うことが出来る解析方法の開発を行った。
 
 \section{Conventional analysis method}
-Conventionaly, the Hough transformation was used in order to remove background from data.
+Conventionally, the Hough transformation was used in order to remove background from data.
 The Hough transformation is one of methods to find lines from a image.
 %従来は、得られたデータから背景事象の除去を行うために、
 %画像中の直線を抽出する手法の１つである
-Hough 変換を用いたアルゴリズムによって行ってきた。
+%Hough 変換を用いたアルゴリズムによって行ってきた。
 In the Hough transformation, a hit pixel in the image at $(x_{i}, y_{i})$ is transformed into
 a curved line in the $(\theta, r)$ parameter space (Hough space)
-according to Eq. (\ref{eq:real2hough}).
+according to Esq. (\ref{eq:real2hough}).
 \begin{equation}
   \label{eq:real2hough}
   r = x_{i}\cos\theta+y_{i}\sin\theta. 
@@ -204,7 +205,7 @@ It is possible to select the events scattered with $\rm{He}$ by using conditions
 the length, the angle, the number, and the location of tracks.
 The energy and the scattering angle is determined from them.
 This method using the Hough transfomation needs complicated condition branches with many parameters.
-It needs too many times to tune the parameters.
+It needs too much time to tune the parameters.
 %抽出した直線の長さや角度、本数、配置に対して多くの条件を課すことによって、
 %$\rm{He}$との散乱事象を選別することが出来る。
 %さらに、選別された事象における$\rm{He}$の飛跡の長さや角度から、
@@ -215,7 +216,7 @@ It needs too many times to tune the parameters.
 
 It takes about 1 day to tune the parameters using 100 CPUs.
 It takes about 1 second by 1 event to process the images after the parameter tuning.
-The selection ability is evaluated by 3000 data that is judged by human eyes.
+The selection ability is evaluated by 3,000 events that was judged by human eyes.
 The accuracy, that is ratio of judgement correctly, is 89\%.
 %パラメータの最適化には100 CPU を使用して約１日かかり、
 %その後の画像識別には1 eventあたり１秒かかった。
@@ -225,12 +226,12 @@ The accuracy, that is ratio of judgement correctly, is 89\%.
 %出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
 \section{New analysis method}
-There is a problem that the conventional method needs complicated condition branches and much machine power.
-We develop new method using neural networks that are recently attracting attention for image recognition.
-Using neural networks, it is may possible to recognize images with not using complicated condition branches,
-but handleing many signatures.
-Onec a neural network trained, it is able to recognize images fast.
-Using features of neural networks, it is expected to realize higher accuracy and
+There are problems that the conventional method needs complicated condition branches and much machine power.
+We developed new method using neural networks that are recently attracting attention for image recognition.
+Using neural networks, it may is possible to recognize images with not using complicated condition branches,
+but considering many features at the same time.
+Once a neural network trained, it is able to recognize images fast.
+Using these features of neural networks, it is expected to realize higher accuracy and
 faster recognition speed than the conventional method.
 
 %従来手法では識別に複雑な分岐条件や多くの計算機パワー
@@ -264,13 +265,13 @@ faster recognition speed than the conventional method.
   \end{minipage}
 \end{figure}
 
-We use Convolutional Neural Network (CNN) that is useful for image recognition,
+We used Convolutional Neural Network (CNN) that is useful for image recognition,
 because the data from MAIKo TPC are images.
 CNN is the network that has convolutional layers.
 The analysis has two steps that are event selection and track extraction.
-We use two network to analyze.
+We used two networks to analyze.
 Figures \ref{fig:selection} and \ref{fig:extraction} show
-the network that selects events and that extracts imformation of tracks.
+the network that selects events and that extracts information of tracks.
 %MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
 %Convolutional Neural Network (CNN)~\cite{lenet,alexnet} を用いた。
 %CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
@@ -280,12 +281,12 @@ the network that selects events and that extracts imformation of tracks.
 %画像から飛跡情報を抽出するニューラルネットワークの構造を
 %それぞれFigs. \ref{fig:selection} and \ref{fig:extraction}に示す。
 
-The neural network for event selection is inputed pair of images from MAIKo TPC and
-outputs probability of event scattered with a target.
-If the probability is bigger than 50\%, the event is judged scattered with a target.
+We input pair of images from MAIKo TPC to the neural network for event selection and
+it outputs probability of event that ${}^{10}\rm{C}$ scattered with a target.
+If the probability is bigger than 50\%, the event is judged scattering with a target.
 Because the anode image and cathode image has different features,
 the network has two branches.
-This network trained and was evaluated with the data that is judged by eye-scan.
+This network was trained and evaluated with the data that is judged by eye-scan.
 2,700 events for training and 300 events for evaluation are used.
 %事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
 %その事象が標的と散乱した事象である確率を出力する。
@@ -295,9 +296,9 @@ This network trained and was evaluated with the data that is judged by eye-scan.
 %人間が判断したデータを用いて、学習および評価を行った。
 %学習には2,700 events、評価には300 events を使用した。
 
-The neural network for track extraction is also inputed pair of images from MAIKo TPC and
-outputs coordinates of points at that a incident particle scattered and at that recoil ${}^{4}\rm{He}$ stopped.
-This network trained and was evaluated with the data that is determined by the conventional method.
+We input pair of images from MAIKo TPC to the neural network for track extraction and
+it outputs coordinates of points at that a incident particle scattered and at that recoil ${}^{4}\rm{He}$ stopped.
+This network was trained and evaluated with the data that is determined by the conventional method.
 3,012 events for training and 1,554 events for evaluation are uesd.
 %飛跡情報を抽出するためのネットワークには、
 %事象選別のときと同様に MAIKo TPC から得られる２つの飛跡画像を入力し、
@@ -327,7 +328,7 @@ The neural network for event selection trained 200 times for 2,700 events.
 It took about 26 minutes for training and about 1 second to process for 300 events.
 The accuracy evaluated by 300 events that are used for evaluation of the conventional method
 is 96\%.
-New method is able to select events in higher accuracy that the conventional method.
+New method is able to select events in higher accuracy than the conventional method.
 It takes shorter time to tune parameters and to process than the conventional method.
 %事象選別のためのニューラルネットワークは、2,700 events に対して200 回学習を行った。
 %学習にはおよそ26分、その後の推測には300 events に対しておよそ1秒かかった。
@@ -338,11 +339,11 @@ It takes shorter time to tune parameters and to process than the conventional me
 
 The neural network for track extraction trained 500 times for 3,012 events.
 It took about 270 minutes for training and about 2 seconds to process for 1,554 events.
-Comparision of coordinates determined by the neural network and the conventional method is shown in Fig. \ref{fig:result_detection}
-with a tipical image.
-The circle point and the triangle point is a scattering point and a stopping point determined by the conventinal method.
+Comparison of coordinates determined by the neural network and the conventional method is shown in Fig. \ref{fig:result_detection}
+with a typical image.
+The circle point and the triangle point is a scattering point and a stopping point determined by the conventional method.
 The square point and the rhombus point is a scattering point and a stopping point determined by the neural network.
-The difference between points of conventinal method and neural network is about 4 mm in root mean squared error for 1,554 events.
+The difference between points of conventional method and neural network is about 4 mm in root mean squared error for 1,554 events.
 It takes shorter time to tune parameters and process than the conventional method.
 %座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
 %学習にはおよそ270分、その後の推測には1,554 events に対しておよそ2秒かかった。
@@ -358,9 +359,9 @@ It takes shorter time to tune parameters and process than the conventional metho
 
 
 \section{Conclusion}
-We developped the new method with neural networks to replace the conventional method with Hough transformation.
+We developed the new method using neural networks replaced the conventional method using Hough transformation.
 The new method selects and extracts in high accuracy and processes faster than the conventional method.
-Neural networks are usefull to analyze data of TPC.
+Neural networks are useful to analyze data of TPC.
 %従来のHough 変換を用いた画像識別アルゴリズムに替わる、
 %ニューラルネットワークを用いた新手法の開発を行った。
 %新手法は従来のものよりも高速かつ高精度に事象の選別を行うことが可能となった。
