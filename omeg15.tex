@@ -26,14 +26,14 @@
 \recdate{2019/8/31} % Write received date here
 
 \abst{
-  In the scattering experiments with the MAIKo TPC, we can project tracks of charged particles
-  onto two planes perpendicular and parallel to the beam axis and acquire these projections as two images.
-  It is, therefore, necessary to analyze these two-dimensional images to reconstruct the original three-dimensional tracks.
+  The MAIKo TPC enable us to project tracks of charged particles
+  onto two planes perpendicular and parallel to the beam axis, and to acquire these projections as two images.
+  It is, therefore, necessary to analyze these two-dimensional images to reconstruct the original three-dimensional tracks of the charged particles.
   Conventionally, we analyze them with the Hough transformation which is a method
   to find lines in images.
-  This conventional analysis method requires complex algorithms and large computing power.
+  This conventional method requires complex algorithms and large computing power.
   Recently neural networks have been widely employed for the image recognition.
-  In the present work, we developed a new analysis method for the MAIKo TPC using neural networks.
+  In the present work, we developed a new method to analyze track images obtained by the MAIKo TPC using neural networks.
   This new method successfully makes the analysis faster and more accurate than the conventional method.
 %
 %  TPC を用いた実験では荷電粒子の飛跡を測定することができる。
@@ -68,7 +68,7 @@ Figure \ref{fig:MAIKo} shows the schematic view of the MAIKo TPC.
 When charged particles pass through the detection gas filled in the MAIKo TPC,
 electrons are emitted along the particle tracks.
 These electrons are drifted downward by an electric field and
-gas-amplified on the surface on the $\mu$-PIC.
+gas-amplified on the surface of the $\mu$-PIC.
 %
 %近年、荷電粒子の飛跡を測定する検出器としてTime Projection Chamber (TPC) が
 %広く用いられている。
@@ -83,7 +83,7 @@ which are arranged orthogonally.
 These strips are aligned at 400-$\rm{\mu m}$ intervals.
 Anode strips are parallel to $x$-axis and %は Fig. \ref{fig:MAIKo}のx軸の方向、
 cathode strips are parallel to $z$-axis as shown in Fig.~\ref{fig:MAIKo}. %は z軸の方向と平行である。
-Electrical signals induced by the amplified electrons are read out through the anode and 
+Electrical signals induced by the amplified electrons and ions are read out through the anode and 
 cathode strips to determine the $x$ and $z$ position of the particle tracks.
 The vertical position of the tracks along the $y$-axis is determined 
 from the drift time of the electrons.
@@ -117,18 +117,17 @@ In this experiment, $\rm{He}$ (96\%) was used as the target gas and $\rm{CO}_{2}
 %この実験では標的ガスである$\rm{He}$ (96\%)に、$\rm{CO}_{2}$ (4\%)をクエンチングガスとして
 %混合して測定を行った。
 
-The tracks of charged particles in each event were projected onto the plane that is perpendicular to the anode strips and
-the plane that is perpendicular to the cathode strips, and were recorded as the anode and cathode images.
+The tracks of charged particles in each event were projected onto the two planes that are perpendicular to the anode and cathode strips, and were recorded as the anode and cathode images.
 The MAIKo TPC outputs two images in each event.
 Figures \ref{fig:true} and \ref{fig:false} are examples of the acquired images.
-These black-and-white images with $1024\times 256$ pixels present drift times
-on the 256 strips of the anode and cathode recorded
+These black-and-white images with $1024\times 256$ pixels present the hit pattern of the 256 strips of the anode and cathode recorded
 at every $10~\rm{ns}$ for the duration of $10~\rm{ns}\times 1024 = 10.24~\rm{\mu s}$.
-Figure \ref{fig:true} shows the anode and cathode images from a ${}^{10}\rm{C}+\alpha$ event
+Figure \ref{fig:true} shows a ${}^{10}\rm{C}+\alpha$ event
 in which the incident ${}^{10}\rm{C}$ beam was scattered at the small angle from the beam axis and the $\alpha$ particle was
 recoiled at the large angle.
-On the other hand, Fig.~\ref{fig:false} is from a background event due to the quenching gas
+On the other hand, Fig.~\ref{fig:false} shows a background event due to the quenching gas
 because the incident ${}^{10}\rm{C}$ beam was scattered at the large angle off a heavy nucleus.
+
 %MAIKo TPC において荷電粒子の飛跡は、
 %anode strip に垂直な面に射影された画像 (anode image) と
 %cathode strip に垂直な面に射影された画像 (cathode image) の2つの画像として取得される。
@@ -142,7 +141,7 @@ because the incident ${}^{10}\rm{C}$ beam was scattered at the large angle off a
 For the ${}^{10}\rm{C}+\alpha$ events, the energy and emission angle of the recoil $\alpha$ particle must
 be determined to obtain the spectroscopic information such as the excitation energy of ${}^{10}\rm{C}$
 and the scattering angle in the center-of-mass system.
-The energy of the recoil $\alpha$ particle is determined from the length of the track in the detection gas and
+The energy of the recoil $\alpha$ particle is determined from the length of the track in the detection gas, and
 the emission angle is determined from the opening angle between the incident particle and the recoil $\alpha$ particle.
 To analyze the anode and cathode images, there are two steps.
 \begin{itemize}
@@ -235,7 +234,7 @@ which were tagged with human eyes.
 %出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
 \section{New analysis method}
-The conventional method has problems of requiring complex algorithms and large computing power.
+The conventional method has problems of requiring the complex algorithm and large computing power.
 We developed a new method using neural networks that have been employed for the image recognition recently.
 Using neural networks, it might be possible to recognize images
 considering many features of tracks at the same time without any complicated algorithms.
@@ -272,7 +271,7 @@ Once a neural network trained, the neural network is able to recognize images fa
   \end{minipage}
 \end{figure}
 
-We used a convolutional neural network (CNN) that is useful for image recognition,
+We used convolutional neural networks (CNNs) that is useful for image recognition,
 because the data from the MAIKo TPC are images.
 %CNN is the network that has convolutional layers.%<-- この行は何も追加情報がないと言われた
 Since the analysis consists of the event selection and the track determination,
@@ -283,7 +282,7 @@ Because the anode and cathode images have different features,
 the network has two branches.
 We inputted pair of images from the MAIKo TPC to the neural network.
 The network for the event selection has 16 layers and the network for the track determination has 21 layers.
-``Input'', ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Output'' in Figs. \ref{fig:selection} and \ref{fig:extraction} shows
+``Input'', ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Output'' in Figs. \ref{fig:selection} and \ref{fig:extraction} show
 the input layer, maxpooling layer, convolutional layer, full connection layer, and output layer respectively.
 %MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
 %Convolutional Neural Network (CNN)~\cite{lenet,alexnet} を用いた。
@@ -294,8 +293,8 @@ the input layer, maxpooling layer, convolutional layer, full connection layer, a
 %画像から飛跡情報を抽出するニューラルネットワークの構造を
 %それぞれFigs. \ref{fig:selection} and \ref{fig:extraction}に示す。
 
-In the event selection, we obtain a probability that the pair of images were taken
-in the ${}^{10}\rm{C}+\alpha$ event from output layer.
+In the event selection, we obtained a probability that the pair of images were taken
+in the ${}^{10}\rm{C}+\alpha$ event from the output layer.
 If the probability was larger than 50\%, the event was regarded as the ${}^{10}\rm{C}+\alpha$ scattering.
 This network was trained and evaluated with the images tagged by eye scan.
 2,700 events were used for the training, and other 300 events were for the evaluation.
@@ -350,13 +349,13 @@ The neural network is able to select events faster and more accurate than the co
 
 The neural network for the track determination was trained 500 times for 3,012 events.
 It took about 270 minutes for the training and about two seconds to process 1,554 events.
-The track endpoints determined by the neural network are compared with those
-by the conventional method in Fig.~\ref{fig:result_detection} in a typical event.
+The track endpoints in a typical event determined by the neural network are compared with those
+by the conventional method in Fig.~\ref{fig:result_detection}.
 The circles and triangles show the scattering and the stopping points determined by the conventional method,
 while the squares and rhombuses show those determined by the neural network.
 The differences in the coordinates of the track endpoints determined by the conventional method
 and the neural network are about four mm in the standard deviation for the 1,554 events.
-The processing time for the neural network to find the track endpoints became much shorter than the conventional method.
+The processing time for the neural network to find the track endpoints is much shorter than the conventional method.
 %座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
 %学習にはおよそ270分、その後の推測には1,554 events に対しておよそ2秒かかった。
 %典型的なイベントにおいて、
@@ -440,7 +439,7 @@ than the conventional method with the Hough transformation.
   Xiaoqiang~Zheng.
   {{TensorFlow}: Large-Scale Machine Learning on Heterogeneous Systems},
   2015.
-  Software available from \url{tensorflow.org/},
+  Software available from \url{tensorflow.org/}.
 \bibitem{keras}
   F.~Chollet et al., (2015). \url{https://keras.io}
 \bibitem{lenet}
