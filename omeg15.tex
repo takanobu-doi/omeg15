@@ -14,7 +14,7 @@
 \author{
   Takanobu \textsc{Doi}$^{1}$, Takahiro \textsc{Kawabata}$^{2}$, Tatsuya \textsc{Furuno}$^{3}$,
   Yuki \textsc{Fujikawa}$^{1}$, Kento \textsc{Inaba}$^{1}$, Motoki \textsc{Murata}$^{3}$,
-  Shintaro \textsc{Okamoto}$^{1}$ and Akane \textsc{Sakaue}$^{1}$}
+  Shintaro \textsc{Okamoto}$^{1}$, and Akane \textsc{Sakaue}$^{1}$}
 
 \inst{
   $^{1}$Department of Physics, Kyoto University, Kyoto, Kyoto 606-8502, Japan \\
@@ -32,7 +32,7 @@
   It is, therefore, necessary to analyze these two-dimensional images to reconstruct the original three-dimensional tracks of the charged particles.
   Conventionally, we analyze them with the Hough transformation which is a method
   to find lines in images.
-  This conventional method requires complex algorithms and large computing power.
+  This conventional method requires complex algorithms and a large computing power.
 %  Recently neural networks have been widely employed for the image recognition.
   In the present work, we developed a new method to analyze track images obtained
   by the MAIKo TPC using neural networks which are widely employed for the image recognition.
@@ -187,7 +187,7 @@ Therefore, we needed to develop a new analysis method using neural networks whic
 \end{figure}
 
 \section{Conventional method}
-The conventional method employs Hough transformation in order to
+The conventional method employs the Hough transformation in order to
 select the ${}^{10}\rm{C}+\alpha$ events and to determine tracks.
 The Hough transformation is one of methods to find lines from an image.
 %従来は、得られたデータから背景事象の除去を行うために、
@@ -217,7 +217,7 @@ the number, position, angle and length.
 Once the ${}^{10}\rm{C}+\alpha$ events are selected, the energy and angle of the recoil $\alpha$ particle
 are determined from the images to calculate the excitation energy and the scattering angle in the center-of-mass system.
 However, the conventional method with the Hough transformation requires a complicated algorithm with many adjustable parameters,
-and the optimization of these parameters needs large computing power.
+and the optimization of these parameters needs a large computing power.
 %抽出した直線の長さや角度、本数、配置に対して多くの条件を課すことによって、
 %$\rm{He}$との散乱事象を選別することが出来る。
 %さらに、選別された事象における$\rm{He}$の飛跡の長さや角度から、
@@ -238,7 +238,7 @@ which were tagged with human eyes.
 %出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
 \section{New method}
-The conventional method has problems of requiring the complex algorithm and large computing power.
+The conventional method has problems of requiring the complex algorithm and a large computing power.
 We developed a new method using neural networks.
 Using neural networks, it might be possible to recognize images
 considering many features of tracks without any complicated algorithms.
@@ -275,7 +275,7 @@ Once a neural network trained, the neural network is expected to recognize image
   \end{minipage}
 \end{figure}
 
-We used convolutional neural networks (CNNs) that is useful for image recognition,
+We used convolutional neural networks (CNNs) that are useful for image recognition~\cite{lenet,alexnet},
 because the data from the MAIKo TPC are images.
 %CNN is the network that has convolutional layers.%<-- この行は何も追加情報がないと言われた
 Since the analysis consists of the event selection and the track determination,
@@ -286,7 +286,7 @@ Because the anode and cathode images have different features,
 the networks have two branches.
 We inputted a pair of images from the MAIKo TPC to the neural networks.
 The network for the event selection has 16 layers and the network for the track determination has 21 layers.
-``Input'', ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Output'' in Figs. \ref{fig:selection} and \ref{fig:extraction} show
+``Input'', ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Output'' in Figs. \ref{fig:selection} and \ref{fig:extraction} mean
 the input layer, maxpooling layer, convolutional layer, full connection layer, and output layer respectively.
 %MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
 %Convolutional Neural Network (CNN)~\cite{lenet,alexnet} を用いた。
@@ -298,11 +298,11 @@ the input layer, maxpooling layer, convolutional layer, full connection layer, a
 %それぞれFigs. \ref{fig:selection} and \ref{fig:extraction}に示す。
 
 In the event selection, we obtained a probability that the pair of images were taken
-in the ${}^{10}\rm{C}+\alpha$ event from the output layer.
+in the ${}^{10}\rm{C}+\alpha$ event.
 If the probability was larger than 50\%, the event was regarded as the ${}^{10}\rm{C}+\alpha$ scattering.
 This network was trained and evaluated with the images tagged by eye scan,
 which were used in the conventional analysis.
-2,700 events were used for the training, and other 300 events were for the evaluation.
+The 2,700 events were used for the training, and the other 300 events were for the evaluation.
 %事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
 %その事象が標的と散乱した事象である確率を出力する。
 %出力された確率が50\%以上である場合にその事象を標的と散乱した事象であるとした。
@@ -314,7 +314,7 @@ In the track determination, the network outputted the coordinates of two endpoin
 a track of a recoil $\alpha$ particle in a ${}^{10}\rm{C}+\alpha$ event in which the recoil $\alpha$ particle stopped
 in the sensitive volume of the MAIKo TPC.
 This network was trained and evaluated with the images processed by the conventional method.
-3,012 events were used for the training, and other 1,554 events were for the evaluation.
+The 3,012 events were used for the training, and the other 1,554 events were for the evaluation.
 %飛跡情報を抽出するためのネットワークには、
 %事象選別のときと同様に MAIKo TPC から得られる２つの飛跡画像を入力し、
 %散乱が起こった座標と反跳した${}^{4}\rm{He}$が停止した座標を出力させる。
@@ -339,8 +339,8 @@ TensorFlow~\cite{tensorflow} + Keras~\cite{keras} in the present analysis.
   \vspace{-2zw}
 \end{wrapfigure}
 
-The neural network for the event selection was trained 200 times for 2,700 events.
-It took about 26 minutes for the training and about one second to process for 300 events.
+The neural network for the event selection was trained 200 times for the 2,700 events.
+It took about 26 minutes for the training and about one second to process for the 300 events.
 The accuracy of the event selection by the neural network was 96\%,
 while the accuracy by the conventional method was 89\%.
 The neural network is able to select events faster and more accurate than the conventional method.
@@ -352,8 +352,8 @@ The neural network is able to select events faster and more accurate than the co
 %従来の手法と比較して高精度に事象選別を行うことが可能となった。
 %また、パラメータチューニングおよび選別に要する時間も大きく短縮することができた。
 
-The neural network for the track determination was trained 500 times for 3,012 events.
-It took about 270 minutes for the training and about two seconds to process 1,554 events.
+The neural network for the track determination was trained 500 times for the 3,012 events.
+It took about 270 minutes for the training and about two seconds to process the 1,554 events.
 The track endpoints in a typical event determined by the neural network are compared with those
 by the conventional method in Fig.~\ref{fig:result_detection}.
 The circles and triangles show the scattering and the stopping points determined by the conventional method,
@@ -393,6 +393,12 @@ than the conventional method with the Hough transformation.
   S.~Kabuki, H.~Kubo, Y.~Matsuda, Y.~Matsuoka, T.~Mizumoto, T.~Morimoto, M.~Murata, T.~Sawano, T.~Suzuki, A.~Takada,
   J.~Tanaka, I.~Tanihata, T.~Tanimori, D.~Tran, M-, Tsumura, and H.~Watanabe,
   Nucl. Instrum. Methods Phys. Res. A \textbf{908}, 215 (2018).
+\bibitem{lenet}
+  Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner,
+  Proceedings of the IEEE \textbf{86}, 11, 2278 (1998).
+\bibitem{alexnet}
+  Alex~Krizhevsky, Ilya~Sutskever, and Geoffrey~E.~Hinton,
+  Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume \textbf{1}, 1097 (2012).
 %\bibitem{tensorflow}
 %  A.~Davis, J.~Dean, M.~Devin, S.~Ghemawat, I.~Goodfellow, A.~Harp, G.~Irving,
 %  M.~Isard, Y.~Jia, R.~Jozefowicz, L.~Kaiser, M.~Kudlur, J.~Levenberg,
@@ -447,12 +453,6 @@ than the conventional method with the Hough transformation.
   Software available from \url{tensorflow.org/}.
 \bibitem{keras}
   F.~Chollet et al., (2015). \url{https://keras.io}
-\bibitem{lenet}
-  Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner,
-  Proceedings of the IEEE \textbf{86}, 11, 2278 (1998).
-\bibitem{alexnet}
-  Alex~Krizhevsky, Ilya~Sutskever, and Geoffrey~E.~Hinton,
-  Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume \textbf{1}, 1097 (2012).
 %\bibitem{vgg}
 %  K.~Simonyan, and A.~Zisserman
 %  arXiv:1409.1556 [cs] (2014).
