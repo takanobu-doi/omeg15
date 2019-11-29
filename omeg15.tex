@@ -57,7 +57,7 @@
 \begin{wrapfigure}{r}{15zw}
   \vspace{0zw}
   \centering
-  \includegraphics[clip, width=15zw]{eps/MAIKo.eps}
+  \includegraphics[clip, width=15zw]{eps/MAIKo_v2.eps}
   \caption{Schematic view of the MAIKo TPC.}
   \label{fig:MAIKo}
   \vspace{-2zw}
@@ -127,8 +127,9 @@ at every $10~\rm{ns}$ for the duration of $10~\rm{ns}\times 1024 = 10.24~\rm{\mu
 Figure \ref{fig:true} shows a ${}^{10}\rm{C}+\alpha$ event
 in which the incident ${}^{10}\rm{C}$ beam was scattered at the small angle from the beam axis and the $\alpha$ particle was
 recoiled at the large angle.
-On the other hand, Figure~\ref{fig:false} shows a background event due to the quenching gas
-in which the incident ${}^{10}\rm{C}$ beam was scattered at the large angle off a heavy nucleus.
+On the other hand, Figure~\ref{fig:false} shows a background event due to \textcolor{red}{a nucleus of} the quenching gas \textcolor{red}{(C or O)}
+in which the incident ${}^{10}\rm{C}$ beam was scattered at the large angle off a heavy nucleus \textcolor{red}{from the beam axis}.
+\textcolor{red}{If incident beam was scattered with ${}^{4}\rm{He}$, it was not scattered at a large angle.}
 
 %MAIKo TPC において荷電粒子の飛跡は、
 %anode strip に垂直な面に射影された画像 (anode image) と
@@ -143,7 +144,7 @@ in which the incident ${}^{10}\rm{C}$ beam was scattered at the large angle off 
 For the ${}^{10}\rm{C}+\alpha$ events, the energy and emission angle of the recoil $\alpha$ particle must
 be determined to obtain the spectroscopic information such as the excitation energy of ${}^{10}\rm{C}$
 and the scattering angle in the center-of-mass system.
-The energy of the recoil $\alpha$ particle is determined from the length of the track in the detection gas consisting of the target gas and the detection gas,
+The energy of the recoil $\alpha$ particle is determined from the length of the track in the detection gas consisting of the target gas and the \textcolor{red}{quenching} gas,
 while the emission angle is determined from the opening angle between the incident particle and the recoil $\alpha$ particle.
 \textcolor{red}{The anode and cathode images are analyzed with following two steps;
   selecting true ${}^{10}\rm{C}+\alpha$ events,
@@ -185,10 +186,10 @@ and neural networks were employed for the analysis of TPC data~\cite{attpc}}.
   \end{minipage}
 \end{figure}
 
-\section{\textcolor{red}{Previous method using Hough transformation}}
+\section{\textcolor{red}{A previous method using Hough transformation}}
 \textcolor{red}{Previously,} the Hough transformation \textcolor{red}{had been employed} in order to
 select the ${}^{10}\rm{C}+\alpha$ events and to determine tracks.
-The Hough transformation is one of methods to find lines from an image\textcolor{red}{,where} 
+The Hough transformation is one of methods to find lines from an image\textcolor{red}{, where} 
 %従来は、得られたデータから背景事象の除去を行うために、
 %画像中の直線を抽出する手法の１つである
 %Hough 変換を用いたアルゴリズムによって行ってきた。
@@ -236,7 +237,7 @@ which were tagged with human eyes.
 %全事象のうち、散乱事象または背景事象の区別を正しく判断することが
 %出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
-\section{New method \textcolor{red}{using neural network}}
+\section{\textcolor{red}{A} new method \textcolor{red}{using neural network}}
 The conventional method has problems of requiring the complex algorithm and a large computing power.
 We developed a new method using neural networks.
 Using neural networks, it might be possible to recognize images
@@ -259,7 +260,7 @@ Once a neural network trained, the neural network is expected to recognize image
   \centering
   \begin{minipage}{0.4\columnwidth}
     \centering
-    \includegraphics[clip, width=0.9\columnwidth]{eps/event_selection.eps}
+    \includegraphics[clip, width=0.9\columnwidth]{eps/event_selection_v2.eps}
 %    \caption{データの選別を行うためのニューラルネットワーク}
     \caption{Schematic structure of the neural network for the event selection.}
     \label{fig:selection}
@@ -267,7 +268,7 @@ Once a neural network trained, the neural network is expected to recognize image
   \hfill
   \begin{minipage}{0.4\columnwidth}
     \centering
-    \includegraphics[clip, width=0.9\columnwidth]{eps/point_detection.eps}
+    \includegraphics[clip, width=0.9\columnwidth]{eps/point_detection_v2.eps}
 %    \caption{画像から情報を抽出するためのニューラルネットワーク}
     \caption{Schematic structure of the neural network for the track determination.}
     \label{fig:extraction}
@@ -280,12 +281,17 @@ Since the analysis consists of the event selection and the track determination,
 we used two networks to analyze.
 Figures \ref{fig:selection} and \ref{fig:extraction} show
 the networks for the event selection and the track determination, respectively.
+\textcolor{red}{Neural networks have the input layer, the output layer, and the hidden layers.}
 Because the anode and cathode images have different features,
 the networks have two branches.
 We inputted a pair of images from the MAIKo TPC to the neural networks.
 The network for the event selection has 16 layers and the network for the track determination has 21 layers.
-``Input'', ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Output'' in Figs. \ref{fig:selection} and \ref{fig:extraction} mean
-the input layer, maxpooling layer, convolutional layer, full connection layer, and output layer respectively.
+\textcolor{red}{The hidden layers in Figs. \ref{fig:selection} and \ref{fig:extraction} consist} ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Dropout''
+\textcolor{red}{which} mean the maxpooling layer, convolutional layer, full connection layer, and dropout layer respectively.
+\textcolor{red}{The networks in Figs. \ref{fig:selection} and \ref{fig:extraction} are
+  the result of searching for a combination that improves accuracy while changing the number of these layers.}
+%これらのネットワークは畳み込みそうとプーリング層のペアと全結合層とドロップアウト層のペアの数を変えながら、
+%精度が良くなる組み合わせを探した結果である。
 %MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
 %Convolutional Neural Network (CNN)~\cite{lenet,alexnet} を用いた。
 %CNN とはネットワーク内に畳み込み層を有するネットワーク構造である。
@@ -301,6 +307,7 @@ If the probability was larger than 50\%, the event was regarded as the ${}^{10}\
 This network was trained and evaluated with the images tagged by eye scan,
 which were used in the conventional analysis.
 The 2,700 events were used for the training, and the other 300 events were for the evaluation.
+\textcolor{red}{The training data for the event selection consists the images and the event tags that the event is recorded in a ${}^{10}\rm{C}+\alpha$ or not.}
 %事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
 %その事象が標的と散乱した事象である確率を出力する。
 %出力された確率が50\%以上である場合にその事象を標的と散乱した事象であるとした。
@@ -313,6 +320,7 @@ a track of a recoil $\alpha$ particle in a ${}^{10}\rm{C}+\alpha$ event in which
 in the sensitive volume of the MAIKo TPC.
 This network was trained and evaluated with the images processed by the conventional method.
 The 3,012 events were used for the training, and the other 1,554 events were for the evaluation.
+\textcolor{red}{The training data for the track determination consists the images and the coordinates of the scattering and stopping points.}
 %飛跡情報を抽出するためのネットワークには、
 %事象選別のときと同様に MAIKo TPC から得られる２つの飛跡画像を入力し、
 %散乱が起こった座標と反跳した${}^{4}\rm{He}$が停止した座標を出力させる。
@@ -327,9 +335,9 @@ TensorFlow~\cite{tensorflow} + Keras~\cite{keras} in the present analysis.
 
 \section{Result}
 \begin{wrapfigure}{r}{25zw}
-  \vspace{-6zw}
+  \vspace{-3zw}
   \centering
-  \includegraphics[clip, width=25zw]{eps/compare_mono_v3.eps}
+  \includegraphics[clip, width=25zw]{eps/compare_mono_v4.eps}
 %  \caption{ニューラルネットワークによって決定した座標とHough変換によって決定した座標との比較}
   \caption{Comparison of the track endpoints determined by the conventional method and the neural network.}
   \label{fig:result_detection}
@@ -391,9 +399,9 @@ than the conventional method with the Hough transformation.
   J.~Tanaka, I.~Tanihata, T.~Tanimori, D.~Tran, M.~Tsumura, and H.~Watanabe,
   Nucl. Instrum. Methods Phys. Res. A \textbf{908}, 215 (2018).
 \bibitem{attpc}
-  M.P.~Kuchera, R.~Ramanujan, J.Z.~Taylor, R.R.~Strauss, D.~Bazin, J.~Bradt,
+  \textcolor{red}{M.P.~Kuchera, R.~Ramanujan, J.Z.~Taylor, R.R.~Strauss, D.~Bazin, J.~Bradt,
   and Ruiming~Chen, 
-  Nucl. Instrum. Methods Phys. Res. A \textbf{940}, 156 (2019).
+  Nucl. Instrum. Methods Phys. Res. A \textbf{940}, 156 (2019).}
 \bibitem{lenet}
   Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner,
   Proceedings of the IEEE \textbf{86}, 11, 2278 (1998).
