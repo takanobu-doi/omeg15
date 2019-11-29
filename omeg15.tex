@@ -4,6 +4,7 @@
 \usepackage{multirow}
 \usepackage{array, booktabs}
 \usepackage{wrapfig}
+\usepackage{color}
 
 \makeatletter
 \newcommand{\figcaption}[1]{\def\@captype{figure}\caption{#1}}
@@ -30,9 +31,8 @@
   tracks of charged particles onto two planes perpendicular
   and parallel to the beam axis, and to acquire these projections as two images.
   It is, therefore, necessary to analyze these two-dimensional images to reconstruct the original three-dimensional tracks of the charged particles.
-  Conventionally, we analyze them with the Hough transformation which is a method
-  to find lines in images.
-  This conventional method requires complex algorithms and a large computing power.
+  \textcolor{red}{One often analyzes} them with the Hough transformation to find lines in images.
+  This conventional method requires \textcolor{red}{a} complex algorithms and a large computing power.
 %  Recently neural networks have been widely employed for the image recognition.
   In the present work, we developed a new method to analyze track images obtained
   by the MAIKo TPC using neural networks which are widely employed for the image recognition.
@@ -65,10 +65,10 @@
 Time projection chambers (TPCs) are widely used to detect tracks of charged particles.
 We developed a TPC using a micro pixel chamber ($\mu$-PIC)~\cite{mupic} named
 MAIKo ($\mu$-PIC based active target for inverse kinematics.)~\cite{MAIKo}
-for unstable nuclei experiments.
-Figure \ref{fig:MAIKo} shows the schematic view of the MAIKo TPC.
-When charged particles pass through the detection gas filled in the MAIKo TPC,
-electrons are emitted along the particle tracks.
+for \textcolor{red}{experiments with unstable nuclei}.
+Figure \ref{fig:MAIKo} shows \textcolor{red}{a} schematic view of the MAIKo TPC.
+When charged particles pass through \textcolor{red}{the MAIKo TPC filled with the detection gas},
+electrons \textcolor{red}{and ions} are \textcolor{red}{generated} along the particle tracks.
 These electrons are drifted downward by an electric field and
 gas-amplified on the surface of the $\mu$-PIC.
 %
@@ -81,11 +81,11 @@ gas-amplified on the surface of the $\mu$-PIC.
 %電子をドリフト電場 (上向き矢印) により読み出し面方向 (下向き) にドリフトさせる
 %ことで飛跡を検出する。
 The anode and cathode electrodes of the $\mu$-PIC are segmented into 256 strips 
-which are arranged orthogonally.
+\textcolor{red}{, respectively,} which are arranged orthogonally.
 These strips are aligned at 400-$\rm{\mu m}$ intervals.
 Anode strips are parallel to $x$-axis and %は Fig. \ref{fig:MAIKo}のx軸の方向、
 cathode strips are parallel to $z$-axis as shown in Fig.~\ref{fig:MAIKo}. %は z軸の方向と平行である。
-Electrical signals induced by the amplified electrons and ions are read out through the anode and 
+\textcolor{red}{Electric} signals induced by the amplified electrons are read out through the anode and 
 cathode strips to determine the $x$ and $z$ position of the particle tracks.
 The vertical position of the tracks along the $y$-axis is determined 
 from the drift time of the electrons.
@@ -95,12 +95,12 @@ Thus, the three-dimensional tracks are reconstructed from $x$-, $y$-, and $z$-co
 %The MAIKo TPC is the active target whose detection gas is used as a target gas.
 %Since incident particles are scattered by target particles in the sensitive volume of the TPC as shown in Fig.~\ref{fig:MAIKo}, 
 %it is possible to detect low energy particles over a large solid angle.
-Incident particles are scattered by target particles in the detection gas of the TPC as shown in Fig.~\ref{fig:MAIKo}, {\it i.e.} the detection gas plays a role of the target gas.
+Incident \textcolor{red}{nuclei} are scattered by target particles in \textcolor{red}{the gas} of the TPC as shown in Fig.~\ref{fig:MAIKo}, {\it i.e.} \textcolor{red}{the gas} plays a role of the target gas.
 Scattered particles escape from the sensitive volume of the TPC and low-energy recoil particles stop inside.
 Since reaction points are inside the sensitive volume of the TPC,
 it is possible to detect low-energy particles over a large solid angle.
 $\rm{H}_{2}$ or $\rm{He}$ gas is widely used as a target gas
-but operation of TPC with pure $\rm{H}_{2}$ or $\rm{He}$ gas is unstable and prone to discharge.
+but operation of TPC with pure $\rm{H}_{2}$ or $\rm{He}$ gas is \textcolor{red}{prone} to discharge.
 Usually, quenching gas with a high tolerance for electric discharges
 like $\rm{CO}_{2}$ or iso-butane is mixed with a target gas
 for stable operation of the TPC although the quenching gas causes background events.
@@ -119,7 +119,7 @@ In this experiment, $\rm{He}$ (96\%) was used as the target gas, and $\rm{CO}_{2
 %この実験では標的ガスである$\rm{He}$ (96\%)に、$\rm{CO}_{2}$ (4\%)をクエンチングガスとして
 %混合して測定を行った。
 
-The tracks of charged particles in each event were projected onto the two planes that are perpendicular to the anode and cathode strips, and were recorded as the anode and cathode images.
+The tracks of charged particles in each event were projected onto \textcolor{red}{the $z$-$y$ and $y$-$z$} planes that are perpendicular to the anode and cathode strips, and were recorded as the anode and cathode images.
 %The MAIKo TPC outputs two images in each event.
 Figures \ref{fig:true} and \ref{fig:false} are examples of the acquired images.
 These black-and-white images with $1024\times 256$ pixels present the hit pattern of the 256 strips on the anode and cathode recorded
@@ -127,7 +127,7 @@ at every $10~\rm{ns}$ for the duration of $10~\rm{ns}\times 1024 = 10.24~\rm{\mu
 Figure \ref{fig:true} shows a ${}^{10}\rm{C}+\alpha$ event
 in which the incident ${}^{10}\rm{C}$ beam was scattered at the small angle from the beam axis and the $\alpha$ particle was
 recoiled at the large angle.
-On the other hand, Fig.~\ref{fig:false} shows a background event due to the quenching gas
+On the other hand, Figure~\ref{fig:false} shows a background event due to the quenching gas
 in which the incident ${}^{10}\rm{C}$ beam was scattered at the large angle off a heavy nucleus.
 
 %MAIKo TPC において荷電粒子の飛跡は、
@@ -145,13 +145,10 @@ be determined to obtain the spectroscopic information such as the excitation ene
 and the scattering angle in the center-of-mass system.
 The energy of the recoil $\alpha$ particle is determined from the length of the track in the detection gas consisting of the target gas and the detection gas,
 while the emission angle is determined from the opening angle between the incident particle and the recoil $\alpha$ particle.
-To analyze the anode and cathode images, there are two steps.
-\begin{itemize}
-\item
-  Select ${}^{10}\rm{C}+\alpha$ events form background events.
-\item
-  Determine the length and the emission angle of the recoil $\alpha$ particle from anode and cathode images.
-\end{itemize}
+\textcolor{red}{The anode and cathode images are analyzed with following two steps;
+  selecting true ${}^{10}\rm{C}+\alpha$ events,
+  and determining the length and the emission angle of $\alpha$ particle from
+  the anode and cathode images.}
 %散乱実験では、散乱粒子のエネルギーと放出角度を決定する必要がある。
 %散乱粒子のエネルギーは散乱粒子がガス中で停止するまでの飛跡の長さから、
 %放出角度は散乱前後の粒子の飛跡から決定することが出来る。
@@ -161,8 +158,10 @@ To analyze the anode and cathode images, there are two steps.
 %\item 飛跡の長さや方向などの物理的情報の抽出
 %\end{itemize}
 %の大きくわけて2つの解析が必要になる。
-However, the conventional analysis method requires a lot of efforts to select events and determine tracks from the anode and cathode images.
-Therefore, we needed to develop a new analysis method using neural networks which are widely employed for the image recognition in recent years.
+However, the \textcolor{red}{previous method} requires a lot of efforts to
+\textcolor{red}{do these two analysis}.
+Therefore, we \textcolor{red}{have developed a new method} using neural networks which are widely employed for the image recognition in recent years\textcolor{red}{,
+and neural networks were employed for the analysis of TPC data~\cite{attpc}}.
 %Figures \ref{fig:true} and \ref{fig:false} のような画像データに対して、
 %事象の選別や飛跡情報の抽出には多くの労力が必要となる。
 %そこで、我々は近年画像認識において多くの成果を出している
@@ -174,26 +173,26 @@ Therefore, we needed to develop a new analysis method using neural networks whic
   \begin{minipage}{0.45\columnwidth}
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/true.eps}
-    \caption{Typical anode and cathode images recorded in a ${}^{10}\rm{C}+\alpha$ event}
+    \caption{Typical anode and cathode images recorded in a ${}^{10}\rm{C}+\alpha$ event\textcolor{red}{.}}
     \label{fig:true}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\columnwidth}
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/false.eps}
-    \caption{Same with Fig.~\ref{fig:true} but recorded in a background event.}
+    \caption{Same \textcolor{red}{as} Fig.~\ref{fig:true} but recorded in a background event.}
     \label{fig:false}
   \end{minipage}
 \end{figure}
 
-\section{Conventional method}
-The conventional method employs the Hough transformation in order to
+\section{\textcolor{red}{Previous method using Hough transformation}}
+\textcolor{red}{Previously,} the Hough transformation \textcolor{red}{had been employed} in order to
 select the ${}^{10}\rm{C}+\alpha$ events and to determine tracks.
-The Hough transformation is one of methods to find lines from an image.
+The Hough transformation is one of methods to find lines from an image\textcolor{red}{,where} 
 %従来は、得られたデータから背景事象の除去を行うために、
 %画像中の直線を抽出する手法の１つである
 %Hough 変換を用いたアルゴリズムによって行ってきた。
-In the Hough transformation, a hit pixel at $(x_{i}, y_{i})$ in the image
+a hit pixel at $(x_{i}, y_{i})$ in the image
 is transformed into
 a curved line in the $(\theta, r)$ parameter space (Hough space)
 according to Eq. (\ref{eq:real2hough}).
@@ -209,14 +208,14 @@ in the original image as given by Eq. (\ref{eq:hough2real}).
 \end{equation}
 When the pixels in the anode or cathode image lie on a straight line,
 their transformed curves intersect at one point at $(\theta_{j}, r_{j})$ in the Hough space.
-Thus, the intersection point in the Hough space gives the particle track according to Eq. (\ref{eq:hough2real}).
+Thus, the intersecting point in the Hough space gives the particle track according to Eq. (\ref{eq:hough2real}).
 
 It is possible to select the ${}^{10}\rm{C}+\alpha$ events by
 utilizing information about the straight lines extracted from the anode and cathode images such as
 the number, position, angle and length.
 Once the ${}^{10}\rm{C}+\alpha$ events are selected, the energy and angle of the recoil $\alpha$ particle
 are determined from the images to calculate the excitation energy and the scattering angle in the center-of-mass system.
-However, the conventional method with the Hough transformation requires a complicated algorithm with many adjustable parameters,
+However, the previous method with the Hough transformation requires a complicated algorithm with many adjustable parameters,
 and the optimization of these parameters needs a large computing power.
 %抽出した直線の長さや角度、本数、配置に対して多くの条件を課すことによって、
 %$\rm{He}$との散乱事象を選別することが出来る。
@@ -237,7 +236,7 @@ which were tagged with human eyes.
 %全事象のうち、散乱事象または背景事象の区別を正しく判断することが
 %出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
-\section{New method}
+\section{New method \textcolor{red}{using neural network}}
 The conventional method has problems of requiring the complex algorithm and a large computing power.
 We developed a new method using neural networks.
 Using neural networks, it might be possible to recognize images
@@ -275,8 +274,7 @@ Once a neural network trained, the neural network is expected to recognize image
   \end{minipage}
 \end{figure}
 
-We used convolutional neural networks (CNNs) that are useful for image recognition~\cite{lenet,alexnet},
-because the data from the MAIKo TPC are images.
+We used convolutional neural networks (CNNs) that are useful for image recognition~\cite{lenet,alexnet}\textcolor{red}{.}
 %CNN is the network that has convolutional layers.%<-- この行は何も追加情報がないと言われた
 Since the analysis consists of the event selection and the track determination,
 we used two networks to analyze.
@@ -322,7 +320,6 @@ The 3,012 events were used for the training, and the other 1,554 events were for
 %%%%このネットワークは２１層からなり、２入力１出力の形をしている。
 %教師データには従来手法で決定した座標を用いた。
 %学習には3,012 events、評価には1,554 events を使用した。
-
 We used Intel Core i7, Nvidia GeForce GTX 1080Ti, Ubuntu 18.04 LTS, and
 TensorFlow~\cite{tensorflow} + Keras~\cite{keras} in the present analysis.
 %学習環境はIntel Core i7、Nvidia GeForce GTX 1080Ti、Ubuntu 18.04 LTS、
@@ -393,6 +390,10 @@ than the conventional method with the Hough transformation.
   S.~Kabuki, H.~Kubo, Y.~Matsuda, Y.~Matsuoka, T.~Mizumoto, T.~Morimoto, M.~Murata, T.~Sawano, T.~Suzuki, A.~Takada,
   J.~Tanaka, I.~Tanihata, T.~Tanimori, D.~Tran, M.~Tsumura, and H.~Watanabe,
   Nucl. Instrum. Methods Phys. Res. A \textbf{908}, 215 (2018).
+\bibitem{attpc}
+  M.P.~Kuchera, R.~Ramanujan, J.Z.~Taylor, R.R.~Strauss, D.~Bazin, J.~Bradt,
+  and Ruiming~Chen, 
+  Nucl. Instrum. Methods Phys. Res. A \textbf{940}, 156 (2019).
 \bibitem{lenet}
   Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner,
   Proceedings of the IEEE \textbf{86}, 11, 2278 (1998).
