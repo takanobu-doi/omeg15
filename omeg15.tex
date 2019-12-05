@@ -287,7 +287,7 @@ the networks have two branches.
 We inputted a pair of images from the MAIKo TPC to the neural networks.
 The network for the event selection has 16 layers and the network for the track determination has 21 layers.
 \textcolor{red}{The hidden layers in Figs. \ref{fig:selection} and \ref{fig:extraction} consist} ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Dropout''
-\textcolor{red}{which} mean the maxpooling layer, convolutional layer, full connection layer, and dropout layer respectively.
+\textcolor{red}{which} mean the maxpooling layer, convolutional layer~\textcolor{red}{\cite{conv}}, full connection layer, and dropout layer~\textcolor{red}{\cite{dropout}} respectively.
 \textcolor{red}{The networks in Figs. \ref{fig:selection} and \ref{fig:extraction} are
   the result of searching for a combination that improves accuracy while changing the number of these layers.}
 %これらのネットワークは畳み込みそうとプーリング層のペアと全結合層とドロップアウト層のペアの数を変えながら、
@@ -344,7 +344,8 @@ TensorFlow~\cite{tensorflow} + Keras~\cite{keras} in the present analysis.
   \vspace{-2zw}
 \end{wrapfigure}
 
-The neural network for the event selection was trained 200 times for the 2,700 events.
+The neural network for the event selection was trained 200 times for the 2,700 events
+\textcolor{red}{which is the number of times that the learning sufficiently converges}.
 It took about 26 minutes for the training and about one second to process for the 300 events.
 The accuracy of the event selection by the neural network was 96\%,
 while the accuracy by the conventional method was 89\%.
@@ -357,7 +358,8 @@ The neural network is able to select events faster and more accurate than the co
 %従来の手法と比較して高精度に事象選別を行うことが可能となった。
 %また、パラメータチューニングおよび選別に要する時間も大きく短縮することができた。
 
-The neural network for the track determination was trained 500 times for the 3,012 events.
+The neural network for the track determination was trained 500 times for the 3,012 events
+\textcolor{red}{which is the number of times that the learning sufficiently converges}.
 It took about 270 minutes for the training and about two seconds to process the 1,554 events.
 The track endpoints in a typical event determined by the neural network are compared with those
 by the conventional method in Fig.~\ref{fig:result_detection}.
@@ -408,6 +410,15 @@ than the conventional method with the Hough transformation.
 \bibitem{alexnet}
   Alex~Krizhevsky, Ilya~Sutskever, and Geoffrey~E.~Hinton,
   Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume \textbf{1}, 1097 (2012).
+\bibitem{conv}
+  \textcolor{red}{
+    Vincent~Dumoulin, and Francesco~Visin
+    arXiv:1603.07285 (2016).
+  }
+\bibitem{dropout}
+  \textcolor{red}{
+    Nitish~Srivastava, Geoffrey~Hinton, Alex~Krizhevsky, Ilya~Sutskever, and Ruslan~Salakhutdinov
+    Journal of Machine Learning Research \textbf{15}, 1929--1958 (2014).}
 %\bibitem{tensorflow}
 %  A.~Davis, J.~Dean, M.~Devin, S.~Ghemawat, I.~Goodfellow, A.~Harp, G.~Irving,
 %  M.~Isard, Y.~Jia, R.~Jozefowicz, L.~Kaiser, M.~Kudlur, J.~Levenberg,
