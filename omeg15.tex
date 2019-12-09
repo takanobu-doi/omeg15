@@ -97,8 +97,8 @@ Thus, the three-dimensional tracks are reconstructed from $x$-, $y$-, and $z$-co
 %Since incident particles are scattered by target particles in the sensitive volume of the TPC as shown in Fig.~\ref{fig:MAIKo}, 
 %it is possible to detect low energy particles over a large solid angle.
 Incident \textcolor{red}{nuclei} are scattered by target particles in \textcolor{red}{the gas} of the TPC as shown in Fig.~\ref{fig:MAIKo}, {\it i.e.} \textcolor{red}{the gas} plays a role of the target gas.
-\textcolor{red}{In forward scatterings where the momentum transfer is small,}
-scattered particles escape from the sensitive volume of the TPC and low-energy recoil particles stop inside.
+\textcolor{red}{In forward scatterings where the momentum transfer is small,
+scattered particles escape from the sensitive volume of the TPC, but low-energy recoil particles stop inside.}
 Since reaction points are inside the sensitive volume of the TPC,
 it is possible to detect low-energy particles over a large solid angle.
 $\rm{H}_{2}$ or $\rm{He}$ gas is widely used as a target gas
@@ -147,7 +147,7 @@ in the background event}.
 For the ${}^{10}\rm{C}+\alpha$ events, the energy and emission angle of the recoil $\alpha$ particle must
 be determined to obtain the spectroscopic information such as the excitation energy of ${}^{10}\rm{C}$
 and the scattering angle in the center-of-mass system.
-The energy of the recoil $\alpha$ particle is determined from the length of the track in the detection gas consisting of the target gas and the \textcolor{red}{quenching} gas,
+The energy of the recoil $\alpha$ particle is determined from the length of the track in \textcolor{red}{the detection gas consisting of the target gas and the quenching} gas,
 while the emission angle is determined from the opening angle between the incident particle and the recoil $\alpha$ particle.
 \textcolor{red}{The anode and cathode images are analyzed with the following two steps;
   selecting true ${}^{10}\rm{C}+\alpha$ events,
@@ -291,7 +291,7 @@ We inputted a pair of images from the MAIKo TPC to the neural networks.
 The network for the event selection has 16 layers and the network for the track determination has 21 layers.
 ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Dropout'' in Figs.~\ref{fig:selection} and \ref{fig:extraction}
 mean the maxpooling layer, convolutional layer~\textcolor{red}{\cite{conv}}, full connection layer, and dropout layer~\textcolor{red}{\cite{dropout}} respectively.
-\textcolor{red}{The structures of the networks in Figs. \ref{fig:selection} and \ref{fig:extraction} {\it i.e.}
+\textcolor{red}{The structures of the networks in Figs. \ref{fig:selection} and \ref{fig:extraction}, {\it i.e.}
   the number and the types of the layers were
   optimized to achieve the highest accuracy in the analysis.}
 %これらのネットワークは畳み込みそうとプーリング層のペアと全結合層とドロップアウト層のペアの数を変えながら、
