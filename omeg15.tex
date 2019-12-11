@@ -32,11 +32,11 @@
   and parallel to the beam axis, and to acquire these projections as two images.
   It is, therefore, necessary to analyze these two-dimensional images to reconstruct the original three-dimensional tracks of the charged particles.
   \textcolor{red}{These images are often analyzed} them with the Hough transformation to find lines in images.
-  This conventional method requires \textcolor{red}{a} complex algorithm and a large computing power.
+  This previous method requires \textcolor{red}{a} complex algorithm and a large computing power.
 %  Recently neural networks have been widely employed for the image recognition.
   In the present work, we developed a new method to analyze track images obtained
   by the MAIKo TPC using neural networks which are widely employed for the image recognition.
-  This new method successfully makes the analysis faster and more accurate than the conventional method.
+  This new method successfully makes the analysis faster and more accurate than the previous method.
 %
 %  TPC を用いた実験では荷電粒子の飛跡を測定することができる。
 %  TPC では3次元的な荷電粒子の飛跡を2次元平面に射影した画像として得られるので、
@@ -129,10 +129,9 @@ at every $10~\rm{ns}$ for the duration of $10~\rm{ns}\times 1024 = 10.24~\rm{\mu
 Figure \ref{fig:true} shows a ${}^{10}\rm{C}+\alpha$ event
 in which the incident ${}^{10}\rm{C}$ beam was scattered at the small angle from the beam axis and the $\alpha$ particle was
 recoiled at the large angle.
-On the other hand, Figure~\ref{fig:false} shows a background event due to \textcolor{red}{a nucleus in} the quenching gas \textcolor{red}{(C or O).}
-The incident ${}^{10}\rm{C}$ beam was scattered at the large angle off a heavy nucleus \textcolor{red}{from the beam axis
-in the background event}.
-\textcolor{red}{If the incident ${}^{10}\rm{C}$ had been scattered with ${}^{4}\rm{He}$, it would not have scattered at a large angle.}
+\textcolor{red}{On the other hand, Figure~\ref{fig:false} shows a background event due to a nucleus in the quenching gas (C or O).
+The incident ${}^{10}\rm{C}$ beam was scattered at the large angle off a heavy nucleus from the beam axis in the background event.
+If the incident ${}^{10}\rm{C}$ had been scattered with ${}^{4}\rm{He}$, it would not have scattered at a large angle.}
 
 %MAIKo TPC において荷電粒子の飛跡は、
 %anode strip に垂直な面に射影された画像 (anode image) と
@@ -241,11 +240,11 @@ which were tagged with human eyes.
 %出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
 \section{\textcolor{red}{A} new method \textcolor{red}{using neural network}}
-The conventional method has problems of requiring the complex algorithm and a large computing power.
+The previous method has problems of requiring the complex algorithm and a large computing power.
 We developed a new method using neural networks.
 Using neural networks, it might be possible to recognize images
 considering many features of tracks without any complicated algorithms.
-Once a neural network trained, the neural network is expected to recognize images faster and more accurate than the conventional method.
+Once a neural network trained, the neural network is expected to recognize images faster and more accurate than the previous method.
 
 %従来手法では識別に複雑な分岐条件や多くの計算機パワー
 %が必要になるという問題点があった。
@@ -290,7 +289,13 @@ the networks have two branches.
 We inputted a pair of images from the MAIKo TPC to the neural networks.
 The network for the event selection has 16 layers and the network for the track determination has 21 layers.
 ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Dropout'' in Figs.~\ref{fig:selection} and \ref{fig:extraction}
-mean the maxpooling layer, convolutional layer~\textcolor{red}{\cite{conv}}, full connection layer, and dropout layer~\textcolor{red}{\cite{dropout}} respectively.
+mean the maxpooling layer, convolutional layer, fully connected layer, and dropout layer respectively.
+\textcolor{red}{The maxpooling layers reduce the size of feature maps by taking the maximum value.
+  The convolutional layers emphasize the features of the input maps through filters.
+  The fully connected layers process the features from the previous layer and pass them to the next layer.
+  The dropout layers block some of the signal from the previous layer to the next layer to avoid overfitting.
+  See Ref.~\cite{conv,dropout} for details.
+}
 \textcolor{red}{The structures of the networks in Figs. \ref{fig:selection} and \ref{fig:extraction}, {\it i.e.}
   the number and the types of the layers were
   optimized to achieve the highest accuracy in the analysis.}
@@ -308,8 +313,9 @@ mean the maxpooling layer, convolutional layer~\textcolor{red}{\cite{conv}}, ful
 In the event selection, the neural network determined a probability that the pair of images were taken
 in the ${}^{10}\rm{C}+\alpha$ event.
 If the probability was larger than 50\%, the event was regarded as the ${}^{10}\rm{C}+\alpha$ scattering.
-This network was trained and evaluated with the images tagged by eye scan,
-which were the same images as those used in the conventional analysis.
+\textcolor{red}{This network was trained and evaluated with the images from 3,000 events of the ${}^{10}{\rm C}+\alpha$
+  events and background events tagged by eye scan,
+  which were the same images as those used in the previous method.}
 The 2,700 events were used for the training, and the other 300 events were for the evaluation.
 %事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
 %その事象が標的と散乱した事象である確率を出力する。
@@ -321,9 +327,9 @@ The 2,700 events were used for the training, and the other 300 events were for t
 In the track determination, the network outputted the coordinates of two endpoints of
 a track of a recoil $\alpha$ particle in a ${}^{10}\rm{C}+\alpha$ event in which the recoil $\alpha$ particle stopped
 in the sensitive volume of the MAIKo TPC.
-This network was trained and evaluated with the images from 4,566 events of the ${}^{10}\rm{C}+\alpha$ scattering.
-The coordinates of the track end points in these events had been determined by the conventional method
-before the new analysis with the neural network.
+\textcolor{red}{This network was trained and evaluated with the images from 4,566 events of the ${}^{10}\rm{C}+\alpha$ events.
+The coordinates of the track end points in these events had been determined by the previous method
+before the new analysis with the neural network.}
 The 3,012 events were used for the training, and the other 1,554 events were for the evaluation.
 %飛跡情報を抽出するためのネットワークには、
 %事象選別のときと同様に MAIKo TPC から得られる２つの飛跡画像を入力し、
@@ -343,7 +349,7 @@ TensorFlow~\cite{tensorflow} + Keras~\cite{keras} in the present analysis.
   \centering
   \includegraphics[clip, width=25zw]{eps/compare_mono_v4.eps}
 %  \caption{ニューラルネットワークによって決定した座標とHough変換によって決定した座標との比較}
-  \caption{Comparison of the track endpoints determined by the conventional method and the neural network.}
+  \caption{Comparison of the track endpoints determined by the previous method and the neural network.}
   \label{fig:result_detection}
   \vspace{-2zw}
 \end{wrapfigure}
@@ -352,8 +358,8 @@ The neural network for the event selection was trained 200 times for the 2,700 e
 \textcolor{red}{until the accuracy of the neural network converged}.
 It took about 26 minutes for the training and about one second to process for the 300 events.
 The accuracy of the event selection by the neural network was 96\%,
-while the accuracy by the conventional method was 89\%.
-The neural network is able to select events faster and more accurate than the conventional method.
+while the accuracy by the previous method was 89\%.
+The neural network is able to select events faster and more accurate than the previous method.
 
 %事象選別のためのニューラルネットワークは、2,700 events に対して200 回学習を行った。
 %学習にはおよそ26分、その後の推測には300 events に対しておよそ1秒かかった。
@@ -365,12 +371,12 @@ The neural network is able to select events faster and more accurate than the co
 The neural network for the track determination was trained 500 times for the 3,012 events.
 It took about 270 minutes for the training and about two seconds to process the 1,554 events.
 The track endpoints in a typical event determined by the neural network are compared with those
-by the conventional method in Fig.~\ref{fig:result_detection}.
-The circles and triangles show the scattering and the stopping points determined by the conventional method,
+by the previous method in Fig.~\ref{fig:result_detection}.
+The circles and triangles show the scattering and the stopping points determined by the previous method,
 while the squares and rhombuses show those determined by the neural network.
-The differences in the coordinates of the track endpoints determined by the conventional method
+The differences in the coordinates of the track endpoints determined by the previous method
 and the neural network are about four mm in the standard deviation for the 1,554 events.
-The processing time for the neural network to find the track endpoints was much shorter than the conventional method.
+The processing time for the neural network to find the track endpoints was much shorter than the previous method.
 %座標の決定のためのニューラルネットワークは、3,012 events に対して500 回学習を行った。
 %学習にはおよそ270分、その後の推測には1,554 events に対しておよそ2秒かかった。
 %典型的なイベントにおいて、
@@ -387,7 +393,7 @@ The processing time for the neural network to find the track endpoints was much 
 \section{Conclusion}
 We developed a new method with neural networks to analyze the track images acquired by the MAIKo TPC.
 It was found that this new method made the event selection and the track determination faster and more accurate
-than the conventional method with the Hough transformation.
+than the previous method with the Hough transformation.
 %従来のHough 変換を用いた画像識別アルゴリズムに替わる、
 %ニューラルネットワークを用いた新手法の開発を行った。
 %新手法は従来のものよりも高速かつ高精度に事象の選別を行うことが可能となった。
