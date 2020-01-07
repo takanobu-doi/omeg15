@@ -30,9 +30,10 @@
   The MAIKo time projection chamber (TPC) enables us to project three-dimensional
   tracks of charged particles onto two planes perpendicular
   and parallel to the beam axis, and to acquire these projections as two images.
-  It is, therefore, necessary to analyze these two-dimensional images to reconstruct the original three-dimensional tracks of the charged particles.
-  \textcolor{red}{These images are often analyzed} with the Hough transformation.
-  This previous method requires \textcolor{red}{a} complex algorithm and a large computing power.
+  It is, therefore, necessary to analyze these two-dimensional images 
+  to reconstruct the original three-dimensional tracks of the charged particles.
+  These images are often analyzed with the Hough transformation.
+  This previous method requires a complex algorithm and a large computing power.
 %  Recently neural networks have been widely employed for the image recognition.
   In the present work, we developed a new method to analyze track images obtained
   by the MAIKo TPC using neural networks which are widely employed for the image recognition.
@@ -65,10 +66,10 @@
 Time projection chambers (TPCs) are widely used to detect tracks of charged particles.
 We developed a TPC using a micro pixel chamber ($\mu$-PIC)~\cite{mupic} named
 MAIKo ($\mu$-PIC based active target for inverse kinematics.)~\cite{MAIKo}
-for \textcolor{red}{experiments with unstable nuclei}.
-Figure \ref{fig:MAIKo} shows \textcolor{red}{a} schematic view of the MAIKo TPC.
-When charged particles pass through \textcolor{red}{the MAIKo TPC filled with the detection gas},
-electrons \textcolor{red}{and ions} are \textcolor{red}{generated} along the particle tracks.
+for experiments with unstable nuclei.
+Figure \ref{fig:MAIKo} shows a schematic view of the MAIKo TPC.
+When charged particles pass through the MAIKo TPC filled with the detection gas,
+electrons and ions are generated along the particle tracks.
 These electrons are drifted downward by an electric field and
 gas-amplified on the surface of the $\mu$-PIC.
 %
@@ -80,12 +81,12 @@ gas-amplified on the surface of the $\mu$-PIC.
 %TPC は検出器にガスを充填しておき、荷電粒子がガス中を通過するときに発生する
 %電子をドリフト電場 (上向き矢印) により読み出し面方向 (下向き) にドリフトさせる
 %ことで飛跡を検出する。
-The anode and cathode electrodes of the $\mu$-PIC are segmented into 256 strips\textcolor{red}{, respectively,}
+The anode and cathode electrodes of the $\mu$-PIC are segmented into 256 strips, respectively,
 which are arranged orthogonally.
 These strips are aligned at 400-$\rm{\mu m}$ intervals.
 Anode strips are parallel to $x$-axis and %は Fig. \ref{fig:MAIKo}のx軸の方向、
 cathode strips are parallel to $z$-axis as shown in Fig.~\ref{fig:MAIKo}. %は z軸の方向と平行である。
-\textcolor{red}{Electric} signals induced by the \textcolor{red}{multiplied} electrons
+Electric signals induced by the multiplied electrons
 and ions are read out through the anode and 
 cathode strips to determine the $x$ and $z$ position of the particle tracks.
 The vertical position of the tracks along the $y$-axis is determined 
@@ -96,17 +97,18 @@ Thus, the three-dimensional tracks are reconstructed from $x$-, $y$-, and $z$-co
 %The MAIKo TPC is the active target whose detection gas is used as a target gas.
 %Since incident particles are scattered by target particles in the sensitive volume of the TPC as shown in Fig.~\ref{fig:MAIKo}, 
 %it is possible to detect low energy particles over a large solid angle.
-Incident \textcolor{red}{nuclei} are scattered by target particles in \textcolor{red}{the gas} of the TPC as shown in Fig.~\ref{fig:MAIKo}, {\it i.e.} \textcolor{red}{the gas} plays a role of the target gas.
-\textcolor{red}{In forward scatterings where the momentum transfer is small,
-scattered particles escape from the sensitive volume of the TPC, but low-energy recoil particles stop inside.}
+Incident nuclei are scattered by target particles in the gas of the TPC as shown in Fig.~\ref{fig:MAIKo}, 
+{\it i.e.} the gas plays a role of the target gas.
+In forward scatterings where the momentum transfer is small,
+scattered particles escape from the sensitive volume of the TPC, but low-energy recoil particles stop inside.
 Since reaction points are inside the sensitive volume of the TPC,
 it is possible to detect even low-energy particles over a large solid angle.
 $\rm{H}_{2}$ or $\rm{He}$ gas is widely used as a target gas
-but operation of TPC with pure $\rm{H}_{2}$ or $\rm{He}$ gas is \textcolor{red}{prone} to discharge.
+but operation of TPC with pure $\rm{H}_{2}$ or $\rm{He}$ gas is prone to discharge.
 Usually, quenching gas with a high tolerance for electric discharges
 like $\rm{CO}_{2}$ or iso-butane is mixed with a target gas
 for stable operation of the TPC although the quenching gas causes background events.
-Recently, the elastic and inelastic alpha scattering on ${}^{10}\rm{C}$ \textcolor{red}{at forward center-of-mass angles}
+Recently, the elastic and inelastic alpha scattering on ${}^{10}\rm{C}$ at forward center-of-mass angles
 were measured with the MAIKo TPC at Research Center for Nuclear Physics (RCNP), Osaka University.
 In this experiment, $\rm{He}$ (96\%) was used as the target gas, and $\rm{CO}_{2}$ (4\%) was used as the quenching gas.
 %MAIKo TPC は検出ガスを散乱の標的として用いるアクティブ標的である。
@@ -121,18 +123,20 @@ In this experiment, $\rm{He}$ (96\%) was used as the target gas, and $\rm{CO}_{2
 %この実験では標的ガスである$\rm{He}$ (96\%)に、$\rm{CO}_{2}$ (4\%)をクエンチングガスとして
 %混合して測定を行った。
 
-The tracks of charged particles in each event were projected onto \textcolor{red}{the $z$-$y$ and $y$-$z$} planes that are perpendicular to the anode and cathode strips, and were recorded as the anode and cathode images.
+The tracks of charged particles in each event were projected onto the $z$-$y$ and $y$-$z$ planes 
+that are perpendicular to the anode and cathode strips, and were recorded as the anode and cathode images.
 %The MAIKo TPC outputs two images in each event.
 Figures \ref{fig:true} and \ref{fig:false} are examples of the acquired images.
-These black-and-white images with $1024\times 256$ pixels present the hit pattern of the 256 strips on the anode and cathode recorded
+These black-and-white images with $1024\times 256$ pixels present the hit pattern of the 256 strips 
+on the anode and cathode recorded
 at every $10~\rm{ns}$ for the duration of $10~\rm{ns}\times 1024 = 10.24~\rm{\mu s}$.
 Figure \ref{fig:true} shows a ${}^{10}\rm{C}+\alpha$ event
 in which the incident ${}^{10}\rm{C}$ beam was scattered at the small angle from the beam axis and the $\alpha$ particle was
 recoiled at the large angle.
-\textcolor{red}{On the other hand, Figure~\ref{fig:false} shows a background event due to a heavy nucleus in the quenching gas (C or O).
+On the other hand, Figure~\ref{fig:false} shows a background event due to a heavy nucleus in the quenching gas (C or O).
 The incident ${}^{10}\rm{C}$ beam should be scattered from a heavy nucleus because the scattering angle was large.
 If the incident ${}^{10}\rm{C}$ had been scattered with ${}^{4}\rm{He}$,
-it would not have been scattered at such a large angle.}
+it would not have been scattered at such a large angle.
 
 %MAIKo TPC において荷電粒子の飛跡は、
 %anode strip に垂直な面に射影された画像 (anode image) と
@@ -147,12 +151,14 @@ it would not have been scattered at such a large angle.}
 For the ${}^{10}\rm{C}+\alpha$ events, the energy and emission angle of the recoil $\alpha$ particle must
 be determined to obtain the spectroscopic information such as the excitation energy of ${}^{10}\rm{C}$
 and the scattering angle in the center-of-mass system.
-The energy of the recoil $\alpha$ particle is determined from the length of the track in \textcolor{red}{the detection gas consisting of the target gas and the quenching} gas,
-while the emission angle is determined from the opening angle between the incident particle and the recoil $\alpha$ particle.
-\textcolor{red}{The anode and cathode images were analyzed with the following two steps;
-  selecting true ${}^{10}\rm{C}+\alpha$ events,
-  and determining the length and the emission angle of $\alpha$ particle from
-  the anode and cathode images.}
+The energy of the recoil $\alpha$ particle is determined from the length of the track 
+in the detection gas consisting of the target gas and the quenching gas,
+while the emission angle is determined from the opening angle between the incident particle 
+and the recoil $\alpha$ particle.
+The anode and cathode images were analyzed with the following two steps;
+selecting true ${}^{10}\rm{C}+\alpha$ events,
+and determining the length and the emission angle of $\alpha$ particle from
+the anode and cathode images.
 %散乱実験では、散乱粒子のエネルギーと放出角度を決定する必要がある。
 %散乱粒子のエネルギーは散乱粒子がガス中で停止するまでの飛跡の長さから、
 %放出角度は散乱前後の粒子の飛跡から決定することが出来る。
@@ -162,10 +168,10 @@ while the emission angle is determined from the opening angle between the incide
 %\item 飛跡の長さや方向などの物理的情報の抽出
 %\end{itemize}
 %の大きくわけて2つの解析が必要になる。
-However, the \textcolor{red}{previous method} required a lot of efforts to
-\textcolor{red}{do these two analyses}.
-Therefore, we \textcolor{red}{have developed a new method} using neural networks which are widely employed for the image recognition.
-\textcolor{red}{The neural networks were also employed for the analysis of TPC data in recent years~\cite{attpc}}.
+However, the previous method required a lot of efforts to
+do these two analyses.
+Therefore, we have developed a new method using neural networks which are widely employed for the image recognition.
+The neural networks were also employed for the analysis of TPC data in recent years~\cite{attpc}.
 %Figures \ref{fig:true} and \ref{fig:false} のような画像データに対して、
 %事象の選別や飛跡情報の抽出には多くの労力が必要となる。
 %そこで、我々は近年画像認識において多くの成果を出している
@@ -184,13 +190,13 @@ Therefore, we \textcolor{red}{have developed a new method} using neural networks
   \begin{minipage}{0.45\columnwidth}
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/false.eps}
-    \caption{Same \textcolor{red}{as} Fig.~\ref{fig:true} but recorded in a background event.}
+    \caption{Same as Fig.~\ref{fig:true} but recorded in a background event.}
     \label{fig:false}
   \end{minipage}
 \end{figure}
 
-\section{\textcolor{red}{Previous method using the Hough transformation}}
-\textcolor{red}{Previously,} the Hough transformation \textcolor{red}{had been employed} in order to
+\section{Previous method using the Hough transformation}
+Previously, the Hough transformation had been employed in order to
 select the ${}^{10}\rm{C}+\alpha$ events and to determine tracks.
 The Hough transformation is one of methods to find lines in an image.
 %従来は、得られたデータから背景事象の除去を行うために、
@@ -240,7 +246,7 @@ which were tagged with human eyes.
 %全事象のうち、散乱事象または背景事象の区別を正しく判断することが
 %出来た事象数の割合を正解率としたとき、この従来型の解析手法では89\%の正解率であった。
 
-\section{New method \textcolor{red}{using neural networks}}
+\section{New method using neural networks}
 The previous method has problems of requiring a complex algorithm and a large computing power.
 We developed a new method using neural networks.
 Using neural networks, it might be possible to recognize images
@@ -278,28 +284,27 @@ Once a neural network trained, the neural network is expected to recognize image
   \end{minipage}
 \end{figure}
 
-We used convolutional neural networks (CNNs) that are useful for image recognition~\cite{lenet,alexnet}\textcolor{red}{.}
+We used convolutional neural networks (CNNs) that are useful for image recognition~\cite{lenet,alexnet}.
 %CNN is the network that has convolutional layers.%<-- この行は何も追加情報がないと言われた
 Since the analysis consists of the event selection and the track determination,
 we used two networks.
 Figures \ref{fig:selection} and \ref{fig:extraction} show
 the networks for the event selection and the track determination, respectively.
-\textcolor{red}{Neural networks generally consist of the input layer, the output layer, and the hidden layers.}
+Neural networks generally consist of the input layer, the output layer, and the hidden layers.
 Because the anode and cathode images have different features,
 the networks have two branches.
 We inputted a pair of images from the MAIKo TPC to the neural networks.
 The network for the event selection has 16 layers and the network for the track determination has 21 layers.
 ``MaxPooling2D'', ``Conv2D'', ``FC'', and ``Dropout'' in Figs.~\ref{fig:selection} and \ref{fig:extraction}
 mean the maxpooling layer, convolutional layer, fully connected layer, and dropout layer respectively.
-\textcolor{red}{The maxpooling layers reduce the size of feature maps by taking the maximum value.
-  The convolutional layers emphasize the features of the input maps through filters.
-  The fully connected layers process the features from the previous layer and pass them to the next layer.
-  The dropout layers block some of the signal from the previous layer to the next layer to avoid overfitting.
-  See Ref.~\cite{conv,dropout} for details about the function of each layer.
-}
-\textcolor{red}{The structures of the networks in Figs. \ref{fig:selection} and \ref{fig:extraction}, {\it i.e.}
-  the number and the types of the layers were
-  optimized to achieve the highest accuracy in the analysis.}
+The maxpooling layers reduce the size of feature maps by taking the maximum value.
+The convolutional layers emphasize the features of the input maps through filters.
+The fully connected layers process the features from the previous layer and pass them to the next layer.
+The dropout layers block some of the signal from the previous layer to the next layer to avoid overfitting.
+See Ref.~\cite{conv,dropout} for details about the function of each layer.
+The structures of the networks in Figs. \ref{fig:selection} and \ref{fig:extraction}, {\it i.e.}
+the number and the types of the layers were
+optimized to achieve the highest accuracy in the analysis.
 %これらのネットワークは畳み込みそうとプーリング層のペアと全結合層とドロップアウト層のペアの数を変えながら、
 %精度が良くなる組み合わせを探した結果である。
 %MAIKo TPC から得られるデータが画像であるため、画像認識に有用とされる
@@ -314,9 +319,9 @@ mean the maxpooling layer, convolutional layer, fully connected layer, and dropo
 In the event selection, the neural network determined a probability that the pair of images were taken
 in the ${}^{10}\rm{C}+\alpha$ event.
 If the probability was larger than 50\%, the event was regarded as the ${}^{10}\rm{C}+\alpha$ scattering.
-\textcolor{red}{This network was trained and evaluated with the images from 3,000 events of the ${}^{10}{\rm C}+\alpha$
-  events and background events tagged by human eyes,
-  which were the same images as those used in the previous method.}
+This network was trained and evaluated with the images from 3,000 events of the ${}^{10}{\rm C}+\alpha$
+events and background events tagged by human eyes,
+which were the same images as those used in the previous method.
 The 2,700 events were used for the training, and the other 300 events were for the evaluation.
 %事象選別のためのニュラルネットワークは、MAIKo TPC から得られる２つの画像を入力し、
 %その事象が標的と散乱した事象である確率を出力する。
@@ -327,9 +332,9 @@ The 2,700 events were used for the training, and the other 300 events were for t
 %学習には2,700 events、評価には300 events を使用した。
 In the track determination, the network outputted the coordinates of two endpoints of
 a track of a recoil $\alpha$ particle in a ${}^{10}\rm{C}+\alpha$ event.
-\textcolor{red}{This network was trained and evaluated with the images from 4,566 events of the ${}^{10}\rm{C}+\alpha$ events.
+This network was trained and evaluated with the images from 4,566 events of the ${}^{10}\rm{C}+\alpha$ events.
 The coordinates of the track end points in these events had been determined by the previous method
-before the new analysis with the neural network.}
+before the new analysis with the neural network.
 The 3,012 events were used for the training, and the other 1,554 events were for the evaluation.
 %飛跡情報を抽出するためのネットワークには、
 %事象選別のときと同様に MAIKo TPC から得られる２つの飛跡画像を入力し、
@@ -355,7 +360,7 @@ TensorFlow~\cite{tensorflow} + Keras~\cite{keras} in the present analysis.
 \end{wrapfigure}
 
 The neural network for the event selection was trained 200 times for the 2,700 events
-\textcolor{red}{until the accuracy of the neural network fully converged}.
+until the accuracy of the neural network fully converged.
 It took about 26 minutes for the training and about one second to process for the 300 events.
 The accuracy of the event selection by the neural network was 96\%,
 while the accuracy by the previous method was 89\%.
@@ -410,9 +415,9 @@ than the previous method with the Hough transformation.
   J.~Tanaka, I.~Tanihata, T.~Tanimori, D.~Tran, M.~Tsumura, and H.~Watanabe,
   Nucl. Instrum. Methods Phys. Res. A \textbf{908}, 215 (2018).
 \bibitem{attpc}
-  \textcolor{red}{M.P.~Kuchera, R.~Ramanujan, J.Z.~Taylor, R.R.~Strauss, D.~Bazin, J.~Bradt,
+  M.P.~Kuchera, R.~Ramanujan, J.Z.~Taylor, R.R.~Strauss, D.~Bazin, J.~Bradt,
   and Ruiming~Chen, 
-  Nucl. Instrum. Methods Phys. Res. A \textbf{940}, 156 (2019).}
+  Nucl. Instrum. Methods Phys. Res. A \textbf{940}, 156 (2019).
 \bibitem{lenet}
   Y.~LeCun, L.~Bottou, Y.~Bengio, and P.~Haffner,
   Proceedings of the IEEE \textbf{86}, 11, 2278 (1998).
@@ -420,14 +425,11 @@ than the previous method with the Hough transformation.
   Alex~Krizhevsky, Ilya~Sutskever, and Geoffrey~E.~Hinton,
   Proceedings of the 25th International Conference on Neural Information Processing Systems - Volume \textbf{1}, 1097 (2012).
 \bibitem{conv}
-  \textcolor{red}{
-    Vincent~Dumoulin, and Francesco~Visin
-    arXiv:1603.07285 (2016).
-  }
+  Vincent~Dumoulin, and Francesco~Visin
+  arXiv:1603.07285 (2016).
 \bibitem{dropout}
-  \textcolor{red}{
-    Nitish~Srivastava, Geoffrey~Hinton, Alex~Krizhevsky, Ilya~Sutskever, and Ruslan~Salakhutdinov
-    Journal of Machine Learning Research \textbf{15}, 1929--1958 (2014).}
+  Nitish~Srivastava, Geoffrey~Hinton, Alex~Krizhevsky, Ilya~Sutskever, and Ruslan~Salakhutdinov
+  Journal of Machine Learning Research \textbf{15}, 1929--1958 (2014).
 %\bibitem{tensorflow}
 %  A.~Davis, J.~Dean, M.~Devin, S.~Ghemawat, I.~Goodfellow, A.~Harp, G.~Irving,
 %  M.~Isard, Y.~Jia, R.~Jozefowicz, L.~Kaiser, M.~Kudlur, J.~Levenberg,
