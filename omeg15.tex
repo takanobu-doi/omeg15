@@ -168,7 +168,7 @@ the anode and cathode images.
 %\item 飛跡の長さや方向などの物理的情報の抽出
 %\end{itemize}
 %の大きくわけて2つの解析が必要になる。
-However, the \textcolor{red}{method using Hough transformation} required a lot of efforts to
+However, the \textcolor{red}{method using the Hough transformation} required a lot of efforts to
 do these two analyses.
 Therefore, we have developed a new method using neural networks which are widely employed for the image recognition.
 The neural networks were also employed for the analysis of TPC data in recent years~\cite{attpc}.
@@ -271,7 +271,8 @@ Once a neural network trained, the neural network is expected to recognize image
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/event_selection_v2.eps}
 %    \caption{データの選別を行うためのニューラルネットワーク}
-    \caption{Schematic structure of the neural network for the event selection.}
+    \caption{Schematic structure of the neural network for the event selection.
+      \textcolor{red}{Details are explained in the text.}}
     \label{fig:selection}
   \end{minipage}
   \hfill
@@ -279,7 +280,8 @@ Once a neural network trained, the neural network is expected to recognize image
     \centering
     \includegraphics[clip, width=0.9\columnwidth]{eps/point_detection_v2.eps}
 %    \caption{画像から情報を抽出するためのニューラルネットワーク}
-    \caption{Schematic structure of the neural network for the track determination.}
+    \caption{Schematic structure of the neural network for the track determination.
+      \textcolor{red}{Details are explained in the text.}}
     \label{fig:extraction}
   \end{minipage}
 \end{figure}
@@ -305,12 +307,6 @@ See Ref.~\cite{conv,dropout} for details about the function of each layer.
 The structures of the networks in Figs. \ref{fig:selection} and \ref{fig:extraction}, {\it i.e.}
 the number and the types of the layers were
 optimized to achieve the highest accuracy in the analysis.
-\textcolor{red}{
-  The network in fig.~\ref{fig:selection} extracts the features from the inputted images in two filters in each branch,
-  extracts the features from the merged feature map in one step, and judges with the feature map.
-  The network in fig.~\ref{fig:extraction} extracts the features from the inputted images in three filters in each branch,
-  and judges with the two feature maps.
-}
 %\textcolor{red}{Figure~\ref{fig:selection}ではconv. と poolのペアで特徴量の抽出を行い，2つの画像を合わせてさらなる抽出を行い，それらの特徴量を用いて判断を行う．
 %Figure~\ref{fig:extraction}では，それぞれで特徴量の抽出を行い，それらの特徴量から最終的な判断を下す．}
 %これらのネットワークは畳み込みそうとプーリング層のペアと全結合層とドロップアウト層のペアの数を変えながら、
