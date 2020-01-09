@@ -5,6 +5,7 @@
 \usepackage{array, booktabs}
 \usepackage{wrapfig}
 \usepackage{color}
+\usepackage{siunitx}
 
 \makeatletter
 \newcommand{\figcaption}[1]{\def\@captype{figure}\caption{#1}}
@@ -64,7 +65,7 @@ These electrons are drifted downward by an electric field and
 gas-amplified on the surface of the $\mu$-PIC.
 The anode and cathode electrodes of the $\mu$-PIC are segmented into 256 strips, respectively,
 which are arranged orthogonally.
-These strips are aligned at 400-$\rm{\mu m}$ intervals.
+These strips are aligned at 400-\si{\micro\metre} intervals.
 Anode strips are parallel to $x$-axis and 
 cathode strips are parallel to $z$-axis as shown in Fig.~\ref{fig:MAIKo}. 
 Electric signals induced by the multiplied electrons
@@ -87,14 +88,15 @@ like $\rm{CO}_{2}$ or iso-butane is mixed with a target gas
 for stable operation of the TPC although the quenching gas causes background events.
 Recently, the elastic and inelastic alpha scattering on ${}^{10}\rm{C}$ at forward center-of-mass angles
 were measured with the MAIKo TPC at Research Center for Nuclear Physics (RCNP), Osaka University.
-In this experiment, $\rm{He}$ (96\%) was used as the target gas, and $\rm{CO}_{2}$ (4\%) was used as the quenching gas.
+In this experiment, $\rm{He}$ (\SI{96}{\percent}) was used as the target gas, 
+and $\rm{CO}_{2}$ (\SI{4}{\percent}) was used as the quenching gas.
 
 The tracks of charged particles in each event were projected onto the $z$-$y$ and $y$-$z$ planes 
 that are perpendicular to the anode and cathode strips, and were recorded as the anode and cathode images.
 Figures \ref{fig:true} and \ref{fig:false} are examples of the acquired images.
 These black-and-white images with $1024\times 256$ pixels present the hit pattern of the 256 strips 
 on the anode and cathode recorded
-at every $10~\rm{ns}$ for the duration of $10~\rm{ns}\times 1024 = 10.24~\rm{\mu s}$.
+at every \SI{10}{\nano\second} for the duration of $\SI{10}{\nano\second}\times 1024 = \SI{10.24}{\micro\second}$.
 Figure \ref{fig:true} shows a ${}^{10}\rm{C}+\alpha$ event
 in which the incident ${}^{10}\rm{C}$ beam was scattered at the small angle from the beam axis and the $\alpha$ particle was
 recoiled at the large angle.
@@ -168,7 +170,7 @@ and the optimization of these parameters needs a large computing power.
 It takes about 24 hours to optimize the parameters using 100 CPUs
 in the computing system at RCNP, 
 and about one second to process the anode and cathode images from one event using one CPU after the parameter optimization.
-The accuracy of the event selection was rated 89\% using 3,000 events,
+The accuracy of the event selection was rated \SI{89}{\percent} using 3,000 events,
 which were tagged with human eyes.
 
 \section{New method using neural networks}
@@ -222,7 +224,7 @@ optimized to achieve the highest accuracy in the analysis.
 
 In the event selection, the neural network determined a probability that the pair of images were taken
 in the ${}^{10}\rm{C}+\alpha$ event.
-If the probability was larger than 50\%, the event was regarded as the ${}^{10}\rm{C}+\alpha$ scattering.
+If the probability was larger than \SI{50}{\percent}, the event was regarded as the ${}^{10}\rm{C}+\alpha$ scattering.
 This network was trained and evaluated with the images from 3,000 events of the ${}^{10}{\rm C}+\alpha$
 events and background events tagged by human eyes,
 which were the same images as those used in the previous method.
@@ -249,8 +251,8 @@ TensorFlow~\cite{tensorflow} + Keras~\cite{keras} in the present analysis.
 The neural network for the event selection was trained 200 times for the 2,700 events
 until the accuracy of the neural network fully converged.
 It took about 26 minutes for the training and about one second to process for the 300 events.
-The accuracy of the event selection by the neural network was 96\%,
-while the accuracy by the previous method was 89\%.
+The accuracy of the event selection by the neural network was \SI{96}{\percent},
+while the accuracy by the previous method was \SI{89}{\percent}.
 The neural network is able to select events faster and more accurate than the previous method.
 
 
